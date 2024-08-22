@@ -1,5 +1,5 @@
 # XVX Browser
-![search_8279973](https://github.com/user-attachments/assets/8f296d33-fca3-48c3-a9a5-eb09b5734ade)
+<img src="https://github.com/user-attachments/assets/8f296d33-fca3-48c3-a9a5-eb09b5734ade" width="300" height="300">
 
 it's a very basic and minimal Browser that its creators don't track you
 
