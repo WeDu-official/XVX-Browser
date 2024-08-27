@@ -28,6 +28,10 @@ they are open source and safe, so microsoft can't track you)
 
 8-you can zoom in and out
 
+9-tab windowing you can make everytab has it's own part in the window
+
+10-tab browsering by seleting any tab and using arrows
+
 -THE NEW 1.1 UPDATE FEATURES-
 
 1-under the url bar there is the website title bar
