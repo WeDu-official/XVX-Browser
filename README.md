@@ -1,4 +1,5 @@
 # XVX Browser
+<img src="https://github.com/user-attachments/assets/8f296d33-fca3-48c3-a9a5-eb09b5734ade" width="300" height="300">
 
 it's a very basic and minimal Browser that its creators don't track you
 
@@ -26,6 +27,10 @@ they are open source and safe, so microsoft can't track you)
 7-showing the source code of the page
 
 8-you can zoom in and out
+
+9-tab windowing you can make everytab has it's own part in the window
+
+10-tab browsering by seleting any tab and using arrows
 
 -THE NEW 1.1 UPDATE FEATURES-
 
