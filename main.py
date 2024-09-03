@@ -13,7 +13,6 @@ sbmc = 'True'
 par = None
 asasa = None
 tko = ""
-jl = wx.TextCtrl
 class HistoryPage(wx.Panel):
     def __init__(self, parent, history_var):
         wx.Panel.__init__(self, parent=parent)
@@ -180,7 +179,7 @@ class BookmarkPage(wx.Panel):
         self.frame.SetTitle("XVX Browser History")
 class WebPage(wx.Panel):
     def __init__(self, parent, history_var, url="https://duckduckgo.com/"):
-        global par,asasa,jl
+        global par,asasa
         wx.Panel.__init__(self, parent=parent)
         self.parent = parent
         par = self.parent
@@ -208,7 +207,6 @@ class WebPage(wx.Panel):
         self.fulltitle.SetCursor(wx.Cursor(wx.CURSOR_IBEAM))
         self.fulltitle.SetBackgroundColour('lightblue')
         self.fulltitle.SetMinSize(geoaka)
-        jl = self.fulltitle
         new = wx.Button(self, label='+', size=(30, 30))
         new_tip = wx.ToolTip('Open a new tab')
         new.SetToolTip(new_tip)
@@ -284,7 +282,7 @@ class WebPage(wx.Panel):
         url_field.Bind(wx.EVT_SET_FOCUS, self.click_on_url_field)
         html_window.Bind(wx.html2.EVT_WEBVIEW_LOADED, self.post_load_config)
         html_window.Bind(wx.html2.EVT_WEBVIEW_NEWWINDOW, self.open_in_new_tab)
-        html_window.Bind(wx.html2.EVT_WEBVIEW_TITLE_CHANGED, self.change_title)
+        self.html_window.Bind(wx.html2.EVT_WEBVIEW_TITLE_CHANGED, self.change_title)
         self.load_url(url)
         url_field.SetValue(url)
         settings_menu = wx.Menu()
@@ -519,11 +517,7 @@ class WebPage(wx.Panel):
     def load_url(self, url=None):
         if url:
             self.html_window.LoadURL(url)
-            global tko, jl
-            try:
-                jl.SetValue(tko)
-            except (TypeError,RuntimeError):
-                pass
+
     def tab_back(self, event):
         if self.html_window.CanGoBack():
             self.load_url()
@@ -557,13 +551,13 @@ class WebPage(wx.Panel):
         if self.remember_history:
             self.visited.append(url)
     def change_title(self, event):
-        global tko
         title = self.html_window.GetCurrentTitle()
-        tko = title
         current_page_index = self.parent.GetPageIndex(self)
         if len(title) > 14:
             self.parent.SetPageText(current_page_index, title[:10] + '...')
+            self.fulltitle.SetValue(title)
         else:
+            self.fulltitle.SetValue(title)
             self.parent.SetPageText(current_page_index, title)
     def on_select(self):
         title = self.html_window.GetCurrentTitle()
@@ -584,7 +578,10 @@ class WebPage(wx.Panel):
             return bool(parsed_url.scheme and parsed_url.netloc)
         url = self.url_field.GetValue()
         if (not url.startswith("https://") and not url.startswith("http://") and lm == 'False'):
-            url = "http://" + url
+            if url.startswith("s:") or url.startswith("S:"):
+                url = "https://duckduckgo.com/" + url[2:]
+            else:
+                url = "http:/" + url
         if lm == 'True':
             url = self.url_field.GetValue()
         self.load_url(url)
@@ -603,7 +600,6 @@ class Browser(wx.Frame):
         self.Bind(wx.EVT_TIMER, self.on_hover_timer)
         self.history_closed = []
         self.load_notebook()
-
     def load_notebook(self):
         self.panel = panel = wx.Panel(self)
         box = wx.BoxSizer(wx.HORIZONTAL)
@@ -630,11 +626,7 @@ class Browser(wx.Frame):
             self.hovered_page.DestroyTipWindow()
             self.hovered_page = None
     def on_tab_hover(self, event):
-        global tko,jl
-        try:
-            jl.SetValue(tko)
-        except (TypeError,RuntimeError):
-            pass
+        pass
 def main():
     app = wx.App()
     browser = Browser(None, title='XVX Browser')

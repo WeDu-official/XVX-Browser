@@ -51,3 +51,9 @@ in the new bookmarks page
 4-show downloads folder
 
 5-fix the old menu which hides itself when maximizing the window
+
+-THE NEW 1.3 UPDATE FEATURES-
+
+1-fixing bug and the title bar problem
+
+2-better perforemance
