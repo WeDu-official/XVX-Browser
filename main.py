@@ -6,13 +6,157 @@ import wx.aui
 import wx.lib.platebtn
 import wx.html2
 import wx.lib.agw.aui.tabart
+bg = [254,254,254]
+tex = [0,0,0]
+bn = [200, 200, 200]
+SCHEME = {
+    'background': wx.Colour(254, 254, 254),  # Dark gray
+    'text': wx.Colour(0,0,0),
+    'button_normal': wx.Colour(200, 200, 200),  # Darker buttons
+}
+LIGHT_SCHEME = {
+    'background': wx.Colour(254, 254, 254),  # Dark gray
+    'text': wx.Colour(0,0,0),
+    'button_normal': wx.Colour(200, 200, 200),  # Darker buttons
+}
 validurl = False
 bookmarks = []
 lm = 'False'
 sbmc = 'True'
 par = None
 asasa = None
+hisd = 'False'
 tko = ""
+q1 = 'True'
+q2 = 'True'
+q3 = 'True'
+class themepage(wx.Panel):
+    def __init__(self,parent):
+        global bg,tex,bn
+        wx.Panel.__init__(self, parent=parent)
+        self.parent = parent
+        self.frame = wx.GetTopLevelParent(self)
+        self.sizer = wx.BoxSizer(wx.VERTICAL)
+        self.new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.new.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.new.SetForegroundColour('lightgray')
+        self.new.SetToolTip(wx.ToolTip('Open a new tab'))
+        self.new.Bind(wx.EVT_ENTER_WINDOW, self.hovered_new)
+        self.new.Bind(wx.EVT_LEAVE_WINDOW, self.leave_new)
+        self.new.Bind(wx.EVT_BUTTON, self.tab_new)
+        row1_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.label1 = wx.StaticText(self, label="Red")
+        self.input1 = wx.TextCtrl(self)
+        self.label2 = wx.StaticText(self, label="Green")
+        self.input2 = wx.TextCtrl(self)
+        self.label3 = wx.StaticText(self, label="Blue")
+        self.input3 = wx.TextCtrl(self)
+        per1 = wx.StaticText(self, label=f"background({bg[0]},{bg[1]},{bg[2]}),(254,254,254)")
+        row1_sizer.Add(self.label1, 0, wx.ALL, 5)
+        row1_sizer.Add(self.input1, 0, wx.ALL, 5)
+        row1_sizer.Add(self.label2, 0, wx.ALL, 5)
+        row1_sizer.Add(self.input2, 0, wx.ALL, 5)
+        row1_sizer.Add(self.label3, 0, wx.ALL, 5)
+        row1_sizer.Add(self.input3, 0, wx.ALL, 5)
+        row1_sizer.Add(per1,0,wx.ALL,5)
+        row1_sizer.Add(self.new, 0, wx.ALL, 5)
+        self.sizer.Add(row1_sizer, 0, wx.ALL, 5)
+        # Create the second row of input places and labels
+        row2_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.label4 = wx.StaticText(self, label="Red")
+        self.input4 = wx.TextCtrl(self)
+        self.label5 = wx.StaticText(self, label="Green")
+        self.input5 = wx.TextCtrl(self)
+        self.label6 = wx.StaticText(self, label="Blue")
+        self.input6 = wx.TextCtrl(self)
+        per2 = wx.StaticText(self, label=f"text({tex[0]},{tex[1]},{tex[2]}),(0,0,0)")
+        row2_sizer.Add(self.label4, 0, wx.ALL, 5)
+        row2_sizer.Add(self.input4, 0, wx.ALL, 5)
+        row2_sizer.Add(self.label5, 0, wx.ALL, 5)
+        row2_sizer.Add(self.input5, 0, wx.ALL, 5)
+        row2_sizer.Add(self.label6, 0, wx.ALL, 5)
+        row2_sizer.Add(self.input6, 0, wx.ALL, 5)
+        row2_sizer.Add(per2,0,wx.ALL,5)
+        self.sizer.Add(row2_sizer, 0, wx.ALL, 5)
+        row3_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        self.label7 = wx.StaticText(self, label="Red")
+        self.input7 = wx.TextCtrl(self)
+        self.label8 = wx.StaticText(self, label="Green")
+        self.input8 = wx.TextCtrl(self)
+        self.label9 = wx.StaticText(self, label="Blue")
+        self.input9 = wx.TextCtrl(self)
+        per3 = wx.StaticText(self, label=f"Buttons({bn[0]},{bn[1]},{bn[2]}),(200,200,200)")
+        send = wx.Button(self,label='save changes')
+        send.Bind(wx.EVT_BUTTON,self.doit)
+        row3_sizer.Add(self.label7, 0, wx.ALL, 5)
+        row3_sizer.Add(self.input7, 0, wx.ALL, 5)
+        row3_sizer.Add(self.label8, 0, wx.ALL, 5)
+        row3_sizer.Add(self.input8, 0, wx.ALL, 5)
+        row3_sizer.Add(self.label9, 0, wx.ALL, 5)
+        row3_sizer.Add(self.input9, 0, wx.ALL, 5)
+        row3_sizer.Add(per3, 0, wx.ALL, 10)
+        row3_sizer.Add(send,0,wx.BOTTOM|wx.CENTER,5)
+        self.sizer.Add(row3_sizer, 0, wx.ALL, 5)
+        self.SetSizer(self.sizer)
+        self.Layout()
+    def doit(self,event):
+        global LIGHT_SCHEME,bg,tex,bn
+        if self.input1.GetValue() == '':
+            v1=254
+        else:
+            v1=int(self.input1.GetValue())
+        if self.input2.GetValue() == '':
+            v2=254
+        else:
+            v2=int(self.input2.GetValue())
+        if self.input3.GetValue() == '':
+            v3=254
+        else:
+            v3=int(self.input3.GetValue())
+        if self.input4.GetValue() == '':
+            v4=254
+        else:
+            v4=int(self.input4.GetValue())
+        if self.input5.GetValue() == '':
+            v5=254
+        else:
+            v5=int(self.input5.GetValue())
+        if self.input6.GetValue() == '':
+            v6=254
+        else:
+            v6=int(self.input6.GetValue())
+        if self.input7.GetValue() == '':
+            v7=254
+        else:
+            v7=int(self.input7.GetValue())
+        if self.input8.GetValue() == '':
+            v8=254
+        else:
+            v8=int(self.input8.GetValue())
+        if self.input9.GetValue() == '':
+            v9=254
+        else:
+            v9=int(self.input9.GetValue())
+        LIGHT_SCHEME = {'background':wx.Colour(v1,v2,v3),
+'text':wx.Colour(v4,v5,v6),
+'button_normal':wx.Colour(v7,v8,v9)}
+        bg = [v1,v2,v3]
+        tex = [v4,v5,v6]
+        bn = [v7,v8,v9]
+        event.Skip()
+    def hovered_new(self,event):
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_new(self,event):
+        self.new.SetForegroundColour('lightgray')
+        event.Skip()
+    def tab_new(self, event):
+        page = WebPage(self.parent, [])
+        self.parent.AddPage(page, caption="Loading", select=True)
+    def on_close(self):
+        self.open = False
+    def on_select(self):
+        self.frame.SetTitle("XVX Browser History")
 class HistoryPage(wx.Panel):
     def __init__(self, parent, history_var):
         wx.Panel.__init__(self, parent=parent)
@@ -24,23 +168,43 @@ class HistoryPage(wx.Panel):
         self.listbox = listbox = wx.ListBox(self)
         top_bar_container = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, label='Double-click on an item to open it.', style=wx.ST_ELLIPSIZE_END)
-        new = wx.Button(self, label='+', size=(30, 30), style=wx.BORDER_NONE)
+        self.new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.new.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.new.SetForegroundColour('lightgray')
+        self.new.Bind(wx.EVT_ENTER_WINDOW, self.hovered_new)
+        self.new.Bind(wx.EVT_LEAVE_WINDOW, self.leave_new)
         new_tip = wx.ToolTip('Open a new tab')
-        new.SetToolTip(new_tip)
-        delh = wx.Button(self, label='-', size=(30, 30), style=wx.BORDER_NONE)
+        self.new.SetToolTip(new_tip)
+        self.delh = wx.Button(self, label='-', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.delh.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.delh.SetForegroundColour('lightgray')
+        self.delh.Bind(wx.EVT_ENTER_WINDOW, self.hovered_delh)
+        self.delh.Bind(wx.EVT_LEAVE_WINDOW, self.leave_delh)
         d_tip = wx.ToolTip('delete selected item from history')
-        delh.SetToolTip(d_tip)
+        self.delh.SetToolTip(d_tip)
         top_bar_container.Add(label, 1, wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
         top_bar_container.AddSpacer(30)
-        top_bar_container.Add(delh, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
-        top_bar_container.Add(new, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
+        top_bar_container.Add(self.delh, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
+        top_bar_container.Add(self.new, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
         pagesizer.Add(top_bar_container, proportion=False, flag=wx.EXPAND)
         pagesizer.Add(listbox, proportion=True, flag=wx.EXPAND)
-        new.Bind(wx.EVT_BUTTON, self.tab_new)
-        delh.Bind(wx.EVT_BUTTON, self.deletehis)
+        self.new.Bind(wx.EVT_BUTTON, self.tab_new)
+        self.delh.Bind(wx.EVT_BUTTON, self.deletehis)
         self.Bind(wx.EVT_LISTBOX_DCLICK, self.open_link)
         self.SetSizer(pagesizer)
         self.refresh()
+    def hovered_delh(self,event):
+        self.delh.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_delh(self,event):
+        self.delh.SetForegroundColour('lightgray')
+        event.Skip()
+    def hovered_new(self,event):
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_new(self,event):
+        self.new.SetForegroundColour('lightgray')
+        event.Skip()
     def refresh(self):
         if self.open:
             try:
@@ -86,7 +250,7 @@ class SourceCode(wx.Panel):
         self.source = source = wx.TextCtrl(self, *args, **kwargs)
         top_bar_container = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, label=('Source: ' + windowurl), style=wx.ST_ELLIPSIZE_END)
-        new = wx.Button(self, label='+', size=(30, 30), style=wx.BORDER_NONE)
+        new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
         new_tip = wx.ToolTip('Open a new tab')
         new.SetToolTip(new_tip)
         top_bar_container.Add(label, 1, wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
@@ -115,23 +279,43 @@ class BookmarkPage(wx.Panel):
         self.listbox = listbox = wx.ListBox(self)
         top_bar_container = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, label='Double-click on an item to open it.', style=wx.ST_ELLIPSIZE_END)
-        new = wx.Button(self, label='+', size=(30, 30), style=wx.BORDER_NONE)
+        self.new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.new.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.new.SetForegroundColour('lightgray')
+        self.new.Bind(wx.EVT_ENTER_WINDOW, self.hovered_new)
+        self.new.Bind(wx.EVT_LEAVE_WINDOW, self.leave_new)
         new_tip = wx.ToolTip('Open a new tab')
-        new.SetToolTip(new_tip)
-        delb = wx.Button(self, label='-', size=(30, 30), style=wx.BORDER_NONE)
+        self.new.SetToolTip(new_tip)
+        self.delb = wx.Button(self, label='-', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.delb.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.delb.SetForegroundColour('lightgray')
+        self.delb.Bind(wx.EVT_ENTER_WINDOW, self.hovered_delb)
+        self.delb.Bind(wx.EVT_LEAVE_WINDOW, self.leave_delb)
         db_tip = wx.ToolTip('delete selected item from bookmarks')
-        delb.SetToolTip(db_tip)
+        self.delb.SetToolTip(db_tip)
         top_bar_container.Add(label, 1, wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
         top_bar_container.AddSpacer(30)
-        top_bar_container.Add(delb, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
-        top_bar_container.Add(new, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
+        top_bar_container.Add(self.delb, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
+        top_bar_container.Add(self.new, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
         pagesizer.Add(top_bar_container, proportion=False, flag=wx.EXPAND)
         pagesizer.Add(listbox, proportion=True, flag=wx.EXPAND)
-        delb.Bind(wx.EVT_BUTTON, self.deleteb)
-        new.Bind(wx.EVT_BUTTON, self.tab_new)
+        self.delb.Bind(wx.EVT_BUTTON, self.deleteb)
+        self.new.Bind(wx.EVT_BUTTON, self.tab_new)
         self.Bind(wx.EVT_LISTBOX_DCLICK, self.open_link)
         self.SetSizer(pagesizer)
         self.refresh()
+    def hovered_delb(self,event):
+        self.delb.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_delb(self,event):
+        self.delb.SetForegroundColour('lightgray')
+        event.Skip()
+    def hovered_new(self,event):
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_new(self,event):
+        self.new.SetForegroundColour('lightgray')
+        event.Skip()
     def deleteb(self,event):
         index = event.GetSelection()
         # Check if an item is selected
@@ -178,43 +362,67 @@ class BookmarkPage(wx.Panel):
     def on_select(self):
         self.frame.SetTitle("XVX Browser History")
 class WebPage(wx.Panel):
-    def __init__(self, parent, history_var, url="https://duckduckgo.com/"):
+    def __init__(self, parent, history_var, url=f"file:///{os.path.dirname(os.path.abspath(__file__)).replace('\\','/')}/home.html"):
         global par,asasa
         wx.Panel.__init__(self, parent=parent)
+        self.SetBackgroundColour(LIGHT_SCHEME['background'])
         self.parent = parent
         par = self.parent
         self.visited = history_var
         asasa = self.visited
         self.remember_history = True
         self.frame = wx.GetTopLevelParent(self)
+        self.frame.SetBackgroundColour(LIGHT_SCHEME['background'])
         self.pagesizer = pagesizer = wx.BoxSizer(wx.VERTICAL)
         self.top_bar_container = top_bar_container = wx.FlexGridSizer(1, 10, 4, 4)
-        self.back = back = wx.Button(self, label='<', size=(30, 30))
+        self.back = back = wx.Button(self, label='<', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.back.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.back.SetForegroundColour('lightgray')
+        self.back.Bind(wx.EVT_ENTER_WINDOW, self.hovered_back)
+        self.back.Bind(wx.EVT_LEAVE_WINDOW, self.leave_back)
         back_tip = wx.ToolTip('Go back one page')
         back.SetToolTip(back_tip)
-        self.forward = forward = wx.Button(self, label='>', size=(30, 30))
+        self.forward = forward = wx.Button(self, label='>', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.forward.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.forward.SetForegroundColour('lightgray')
+        self.forward.Bind(wx.EVT_ENTER_WINDOW, self.hovered_forward)
+        self.forward.Bind(wx.EVT_LEAVE_WINDOW, self.leave_forward)
         forward_tip = wx.ToolTip('Go forward one page')
         forward.SetToolTip(forward_tip)
-        self.reload = reload = wx.Button(self, label='⟳', size=(30, 30))
+        self.reload = reload = wx.Button(self, label='⟳', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.reload.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.reload.SetForegroundColour('lightgray')
+        self.reload.Bind(wx.EVT_ENTER_WINDOW, self.hovered_reload)
+        self.reload.Bind(wx.EVT_LEAVE_WINDOW, self.leave_reload)
         reload_tip = wx.ToolTip('Reload current page')
         reload.SetToolTip(reload_tip)
         self.url_field = url_field = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
         self.url_field.SetCursor(wx.Cursor(wx.CURSOR_IBEAM))
         geoaka = (400, 15)
-        self.url_field.SetBackgroundColour('lightblue')
         self.url_field.SetMinSize(geoaka)
         self.fulltitle = fulltitle = wx.TextCtrl(self, value="", style=wx.TE_READONLY)
         self.fulltitle.SetCursor(wx.Cursor(wx.CURSOR_IBEAM))
-        self.fulltitle.SetBackgroundColour('lightblue')
         self.fulltitle.SetMinSize(geoaka)
-        new = wx.Button(self, label='+', size=(30, 30))
-        new_tip = wx.ToolTip('Open a new tab')
-        new.SetToolTip(new_tip)
-        self.buttosn = wx.Button(self, label="☰", size=(30, 30))
+        self.new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.new.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.new.SetForegroundColour('lightgray')
+        self.new.Bind(wx.EVT_ENTER_WINDOW, self.hovered_new)
+        self.new.Bind(wx.EVT_LEAVE_WINDOW, self.leave_new)
+        self.new_tip = wx.ToolTip('Open a new tab')
+        self.new.SetToolTip(self.new_tip)
+        self.buttosn = wx.Button(self, label="☰", size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.buttosn.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.buttosn.SetForegroundColour('lightgray')
+        self.buttosn.Bind(wx.EVT_ENTER_WINDOW, self.hovered_op1)
+        self.buttosn.Bind(wx.EVT_LEAVE_WINDOW, self.leave_op1)
         self.buttosn.SetToolTip(wx.ToolTip('show menu'))
         font = wx.Font(18, family=wx.FONTFAMILY_MODERN, style=0, weight=90,
                        underline=False, faceName="", encoding=wx.FONTENCODING_DEFAULT)
-        self.buttosn2 = wx.Button(self, label="⚙", size=(30, 30))
+        self.buttosn2 = wx.Button(self, label="⚙", size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.buttosn2.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.buttosn2.SetForegroundColour('lightgray')
+        self.buttosn2.Bind(wx.EVT_ENTER_WINDOW, self.hovered_op2)
+        self.buttosn2.Bind(wx.EVT_LEAVE_WINDOW, self.leave_op2)
         self.buttosn2.SetFont(font)
         self.buttosn2.SetToolTip(wx.ToolTip('General Settings'))
         stacked_sizer = wx.BoxSizer(wx.VERTICAL)
@@ -230,7 +438,7 @@ class WebPage(wx.Panel):
         top_bar_container.Add(self.buttosn, 0, wx.RIGHT | wx.BOTTOM | wx.TOP, 5)
         top_bar_container.Add(self.buttosn2, 0, wx.RIGHT | wx.BOTTOM | wx.TOP, 5)
         top_bar_container.AddSpacer(30)
-        top_bar_container.Add(new, 0, wx.ALIGN_RIGHT | wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
+        top_bar_container.Add(self.new, 0, wx.ALIGN_RIGHT | wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
         self.find_container = find_container = wx.BoxSizer(wx.HORIZONTAL)
         self.find_field = find_field = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
         find_next = wx.Button(self, label='>', size=(30, 30))
@@ -277,7 +485,7 @@ class WebPage(wx.Panel):
         back.Bind(wx.EVT_BUTTON, self.tab_back)
         forward.Bind(wx.EVT_BUTTON, self.tab_foward)
         reload.Bind(wx.EVT_BUTTON, self.tab_reload)
-        new.Bind(wx.EVT_BUTTON, self.tab_new)
+        self.new.Bind(wx.EVT_BUTTON, self.tab_new)
         url_field.Bind(wx.EVT_TEXT_ENTER, self.loadpage)
         url_field.Bind(wx.EVT_SET_FOCUS, self.click_on_url_field)
         html_window.Bind(wx.html2.EVT_WEBVIEW_LOADED, self.post_load_config)
@@ -288,39 +496,43 @@ class WebPage(wx.Panel):
         settings_menu = wx.Menu()
         self.optional_menu = wx.Menu()
         self.menu_dbookmarks = menu_dbookmarks = wx.MenuItem(self.optional_menu, 0, "Store bookmarks: " + sbmc)
-        self.menu_lm = menu_lm = wx.MenuItem(self.optional_menu, 1, "literal mode: " + lm)
+        self.menu_lm = menu_lm = wx.MenuItem(self.optional_menu, 1, "Literal mode: " + lm)
+        self.menu_dish = menu_dish = wx.MenuItem(self.optional_menu, 2, "Disable history: " + hisd)
         self.optional_menu.Append(self.menu_dbookmarks)
         self.optional_menu.AppendSeparator()
         self.optional_menu.Append(self.menu_lm)
+        self.optional_menu.Append(self.menu_dish)
         self.page_menu = wx.Menu()
-        menu_zoom = wx.MenuItem(settings_menu, 0, "Change zoom")
-        self.menu_contextmenu = menu_contextmenu = wx.MenuItem(settings_menu, 2, "Enable context menu", "",
-                                                           wx.ITEM_CHECK)
-        self.menu_historyenabled = menu_historyenabled = wx.MenuItem(settings_menu, 3, "Remember page history", "",
-                                                                     wx.ITEM_CHECK)
+        menu_zoom = wx.MenuItem(settings_menu, 10, "Change zoom")
+        self.menu_contextmenu = menu_contextmenu = wx.MenuItem(settings_menu, 11, "Enable context menu: " + q2)
+        self.menu_historyenabled = menu_historyenabled = wx.MenuItem(settings_menu, 12, "Page forever lock")
         menu_source = wx.MenuItem(self.page_menu, 0, "Show source")
         menu_history = wx.MenuItem(self.page_menu, 1, "Show history")
         menu_print = wx.MenuItem(self.page_menu, 2, "Print this page")
         menu_find = wx.MenuItem(self.page_menu, 3, "Find in page")
-        menu_dhistory = wx.MenuItem(self.page_menu, 4, "delete history")
-        menu_downloads = wx.MenuItem(self.page_menu, 5, "show downloads folder")
-        menu_bookmarks = wx.MenuItem(self.page_menu, 6, "show bookmarks page")
-        menu_addbookmarks = wx.MenuItem(self.page_menu, 7, "add this website to bookmarks")
+        menu_dhistory = wx.MenuItem(self.page_menu, 4, "Delete history")
+        menu_downloads = wx.MenuItem(self.page_menu, 5, "Show downloads folder")
+        menu_bookmarks = wx.MenuItem(self.page_menu, 6, "Show bookmarks page")
+        menu_addbookmarks = wx.MenuItem(self.page_menu, 7, "Add this website to bookmarks")
+        menu_theme = wx.MenuItem(self.page_menu, 8, "Change Theme")
+        menu_dth = wx.MenuItem(self.page_menu, 9, "Turn to default theme")
         settings_menu.Append(menu_zoom)
         settings_menu.AppendSeparator()
         try:
             self.html_window.EnableAccessToDevTools()
-            self.menu_devtools = menu_devtools = wx.MenuItem(settings_menu, 1, "Enable access to dev tools", "",
-                                                             wx.ITEM_CHECK)
+            self.menu_devtools = menu_devtools = wx.MenuItem(settings_menu, 12, "Enable access to dev tools: " + q1)
             settings_menu.Append(menu_devtools)
-            menu_devtools.Check()
             settings_menu.Bind(wx.EVT_MENU, self.enable_devtools, menu_devtools)
         except:
             pass
         settings_menu.Append(menu_contextmenu)
+        settings_menu.AppendSeparator()
         settings_menu.Append(menu_historyenabled)
         self.page_menu.Append(menu_downloads)
         self.page_menu.Append(menu_source)
+        self.page_menu.AppendSeparator()
+        self.page_menu.Append(menu_theme)
+        self.page_menu.Append(menu_dth)
         self.page_menu.AppendSeparator()
         self.page_menu.Append(menu_history)
         self.page_menu.Append(menu_dhistory)
@@ -332,12 +544,9 @@ class WebPage(wx.Panel):
         self.page_menu.Append(menu_addbookmarks)
         self.page_menu.AppendSeparator()
         self.page_menu.AppendSubMenu(settings_menu, 'Page Settings')
-        html_window.EnableContextMenu()
-        html_window.EnableHistory()
-        menu_contextmenu.Check()
-        menu_historyenabled.Check()
         self.optional_menu.Bind(wx.EVT_MENU, self.csbmc, menu_dbookmarks)
         self.optional_menu.Bind(wx.EVT_MENU, self.clms, menu_lm)
+        self.optional_menu.Bind(wx.EVT_MENU, self.eadh, menu_dish)
         settings_menu.Bind(wx.EVT_MENU, self.enable_contextmenu, menu_contextmenu)
         settings_menu.Bind(wx.EVT_MENU, self.enable_historyenabled, menu_historyenabled)
         settings_menu.Bind(wx.EVT_MENU, self.adjust_zoom, menu_zoom)
@@ -345,13 +554,60 @@ class WebPage(wx.Panel):
         self.page_menu.Bind(wx.EVT_MENU, self.show_history, menu_history)
         self.page_menu.Bind(wx.EVT_MENU, self.print_page, menu_print)
         self.page_menu.Bind(wx.EVT_MENU, self.find_in_page, menu_find)
+        self.page_menu.Bind(wx.EVT_MENU, self.open_theme, menu_theme)
+        self.page_menu.Bind(wx.EVT_MENU, self.turnbacktodth, menu_dth)
         self.page_menu.Bind(wx.EVT_MENU, self.dhistory, menu_dhistory)
         self.page_menu.Bind(wx.EVT_MENU, self.downloadsfolder, menu_downloads)
         self.page_menu.Bind(wx.EVT_MENU, self.bookmark_minitab, menu_bookmarks)
         self.page_menu.Bind(wx.EVT_MENU, self.bookmarksadd, menu_addbookmarks)
         self.buttosn.Bind(wx.EVT_BUTTON, self.sshowf)
         self.buttosn2.Bind(wx.EVT_BUTTON, self.sshowf2)
+        self.k = 0
         self.SetSizer(pagesizer)
+    def hovered_back(self,event):
+        self.back.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_back(self,event):
+        self.back.SetForegroundColour('lightgray')
+        event.Skip()
+    def hovered_forward(self,event):
+        self.forward.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_forward(self,event):
+        self.forward.SetForegroundColour('lightgray')
+        event.Skip()
+    def hovered_reload(self,event):
+        self.reload.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_reload(self,event):
+        self.reload.SetForegroundColour('lightgray')
+        event.Skip()
+    def hovered_op1(self,event):
+        self.buttosn.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_op1(self,event):
+        self.buttosn.SetForegroundColour('lightgray')
+        event.Skip()
+    def hovered_op2(self,event):
+        self.buttosn2.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_op2(self,event):
+        self.buttosn2.SetForegroundColour('lightgray')
+        event.Skip()
+    def hovered_new(self,event):
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_new(self,event):
+        self.new.SetForegroundColour('lightgray')
+        event.Skip()
+    def eadh(self,event):
+        global hisd
+        if hisd == 'True':
+            hisd = 'False'
+        else:
+            hisd = 'True'
+        self.menu_dish.SetItemLabel("Disable history: " + hisd)
+        event.Skip()
     def csbmc(self,event):
         global sbmc
         if sbmc == 'True':
@@ -364,6 +620,16 @@ class WebPage(wx.Panel):
         self.PopupMenu(self.page_menu)
     def sshowf2(self,event):
         self.PopupMenu(self.optional_menu)
+    def open_theme(self,event):
+        theme_tab = themepage(self.parent)
+        self.parent.AddPage(theme_tab, caption="XVX Browser theme", select=False)
+    def turnbacktodth(self,event):
+        global LIGHT_SCHEME
+        LIGHT_SCHEME = {
+            'background': wx.Colour(254, 254, 254),  # Dark gray
+            'text': wx.Colour(0, 0, 0),
+            'button_normal': wx.Colour(200, 200, 200),
+        }
     def bookmarksadd(self,event):
         if sbmc == 'True':
             try:
@@ -444,7 +710,6 @@ class WebPage(wx.Panel):
             scale_val = wx.html2.WEBVIEW_ZOOM_LARGE
         elif scalenum == 5:
             scale_val = wx.html2.WEBVIEW_ZOOM_LARGEST
-
         self.html_window.SetZoom(scale_val)
     def print_page(self, event):
         self.html_window.Print()
@@ -493,18 +758,45 @@ class WebPage(wx.Panel):
             lm = 'False'
         self.menu_lm.SetItemLabel("literal mode: " + lm)
         event.Skip()
-
     def enable_devtools(self, event):
-        self.html_window.EnableAccessToDevTools(self.menu_devtools.IsChecked())
-
+        global q1
+        if q1 == 'True':
+            q1 = 'False'
+        else:
+            q1 = 'True'
+        self.menu_devtools.SetItemLabel("Enable access to dev tools: " + q1)
+        if q1 == 'True':
+            self.html_window.EnableAccessToDevTools(True)
+        else:
+            self.html_window.EnableAccessToDevTools(False)
+        event.Skip()
     def enable_contextmenu(self, event):
-        self.html_window.EnableContextMenu(self.menu_contextmenu.IsChecked())
-
+        global q2
+        if q2 == 'True':
+            q2 = 'False'
+        else:
+            q2 = 'True'
+        self.menu_contextmenu.SetItemLabel("Enable context menu: " + q2)
+        if q2 == 'True':
+            self.html_window.EnableContextMenu(True)
+        else:
+            self.html_window.EnableContextMenu(False)
+        event.Skip()
     def enable_historyenabled(self, event):
-        history_enabled = self.menu_historyenabled.IsChecked()
+        global q3
+        if q3 == 'True':
+            q3 = 'False'
+        else:
+            q3 = 'True'
+        if q3 == 'True':
+            history_enabled = True
+            self.menu_historyenabled.SetItemLabel("page forever lock")
+        else:
+            history_enabled = False
+            self.menu_historyenabled.SetItemLabel("LOCKED UNCHANGEABLE")
+            self.menu_historyenabled.Enable(False)
         self.html_window.EnableHistory(history_enabled)
         self.remember_history = history_enabled
-
         if self.html_window.CanGoBack():
             self.back.Enable()
         else:
@@ -513,16 +805,14 @@ class WebPage(wx.Panel):
             self.forward.Enable()
         else:
             self.forward.Disable()
-
+        event.Skip()
     def load_url(self, url=None):
         if url:
             self.html_window.LoadURL(url)
-
     def tab_back(self, event):
         if self.html_window.CanGoBack():
             self.load_url()
             self.html_window.GoBack()
-
     def tab_foward(self, event):
         if self.html_window.CanGoForward():
             self.load_url()
@@ -536,8 +826,10 @@ class WebPage(wx.Panel):
             self.html_window.Reload()
     def tab_new(self, event):
         page = WebPage(self.parent, self.visited)
+        page.SetBackgroundColour(LIGHT_SCHEME['background'])
         self.parent.AddPage(page, caption="Loading", select=True)
     def post_load_config(self, event=None):
+        global hisd
         url = self.html_window.GetCurrentURL()
         self.url_field.SetValue(url)
         if self.parent.GetSelection() == self.parent.GetPageIndex(self):
@@ -549,7 +841,8 @@ class WebPage(wx.Panel):
         self.reload.SetLabel("⟳")
         self.url_field.Enable()
         if self.remember_history:
-            self.visited.append(url)
+            if hisd == 'False':
+                self.visited.append(url)
     def change_title(self, event):
         title = self.html_window.GetCurrentTitle()
         current_page_index = self.parent.GetPageIndex(self)
@@ -610,6 +903,8 @@ class Browser(wx.Frame):
         notebook.Bind(wx.aui.EVT_AUINOTEBOOK_PAGE_CLOSE, self.on_page_close)
         notebook.Bind(wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED, self.on_page_select)
         notebook.Bind(wx.EVT_MOTION, self.on_tab_hover)
+        notebook.SetBackgroundColour(LIGHT_SCHEME['background'])
+        self.notebook.SetBackgroundColour(LIGHT_SCHEME['background'])
     def on_page_close(self, event):
         event.Skip()
         try:
@@ -625,8 +920,7 @@ class Browser(wx.Frame):
         if self.hovered_page:
             self.hovered_page.DestroyTipWindow()
             self.hovered_page = None
-    def on_tab_hover(self, event):
-        pass
+    def on_tab_hover(self, event): pass
 def main():
     app = wx.App()
     browser = Browser(None, title='XVX Browser')
