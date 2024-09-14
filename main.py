@@ -419,9 +419,16 @@ class WebPage(wx.Panel):
         self.buttosn2 = wx.Button(self,label="⚙",size=(30, 30), style=wx.DOUBLE_BORDER)
         self.buttosn2.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
         self.buttosn2.SetForegroundColour('lightgray')
-        self.buttosn2.SetFont(wx.Font(15, wx.DEFAULT, wx.NORMAL, wx.NORMAL, False, 'Consolas'))
+        self.buttosn2.SetFont(wx.Font(15, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, 'Consolas'))
         self.buttosn2.Bind(wx.EVT_ENTER_WINDOW, self.hovered_op2)
         self.buttosn2.SetToolTip(wx.ToolTip('General Settings'))
+        self.SM = wx.Button(self, label="❃", size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.SM.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.SM.SetForegroundColour('lightgray')
+        self.SM.SetFont(wx.Font(19, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, 'Consolas'))
+        self.SM.Bind(wx.EVT_ENTER_WINDOW, self.hovered_sm)
+        self.SM.Bind(wx.EVT_LEAVE_WINDOW, self.leave_sm)
+        self.SM.SetToolTip(wx.ToolTip('show menu'))
         stacked_sizer = wx.BoxSizer(wx.VERTICAL)
         stacked_sizer.Add(self.url_field,1, wx.EXPAND,5)
         stacked_sizer.Add(self.fulltitle,1, wx.EXPAND,5)
@@ -434,6 +441,7 @@ class WebPage(wx.Panel):
         self.top_bar_container.Add(stacked_sizer, 0, wx.EXPAND)
         top_bar_container.Add(self.buttosn, 0, wx.RIGHT | wx.BOTTOM | wx.TOP, 5)
         top_bar_container.Add(self.buttosn2, 0, wx.RIGHT | wx.BOTTOM | wx.TOP, 5)
+        top_bar_container.Add(self.SM, 0, wx.RIGHT | wx.BOTTOM | wx.TOP, 5)
         top_bar_container.AddSpacer(30)
         top_bar_container.Add(self.new, 0, wx.ALIGN_RIGHT | wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
         self.find_container = find_container = wx.BoxSizer(wx.HORIZONTAL)
@@ -491,6 +499,12 @@ class WebPage(wx.Panel):
         self.load_url(url)
         url_field.SetValue(url)
         settings_menu = wx.Menu()
+        self.sm_menu = wx.Menu()
+        self.menu_sm1 = menu_sm1 = wx.MenuItem(self.sm_menu, 0, "make a server")
+        self.menu_sm2 = menu_sm2 = wx.MenuItem(self.sm_menu, 1, "join a server")
+        self.sm_menu.Append(self.menu_sm1)
+        self.sm_menu.AppendSeparator()
+        self.sm_menu.Append(self.menu_sm2)
         self.optional_menu = wx.Menu()
         self.menu_dbookmarks = menu_dbookmarks = wx.MenuItem(self.optional_menu, 0, "Store bookmarks: " + sbmc)
         self.menu_lm = menu_lm = wx.MenuItem(self.optional_menu, 1, "Literal mode: " + lm)
@@ -541,6 +555,8 @@ class WebPage(wx.Panel):
         self.page_menu.Append(menu_addbookmarks)
         self.page_menu.AppendSeparator()
         self.page_menu.AppendSubMenu(settings_menu, 'Page Settings')
+        self.sm_menu.Bind(wx.EVT_MENU, self.mas, menu_sm1)
+        self.sm_menu.Bind(wx.EVT_MENU, self.cts, menu_sm2)
         self.optional_menu.Bind(wx.EVT_MENU, self.csbmc, menu_dbookmarks)
         self.optional_menu.Bind(wx.EVT_MENU, self.clms, menu_lm)
         self.optional_menu.Bind(wx.EVT_MENU, self.eadh, menu_dish)
@@ -559,8 +575,15 @@ class WebPage(wx.Panel):
         self.page_menu.Bind(wx.EVT_MENU, self.bookmarksadd, menu_addbookmarks)
         self.buttosn.Bind(wx.EVT_BUTTON, self.sshowf)
         self.buttosn2.Bind(wx.EVT_BUTTON, self.sshowf2)
+        self.SM.Bind(wx.EVT_BUTTON, self.sshowf3)
         self.k = 0
         self.SetSizer(pagesizer)
+    def cts(self,event):
+        os.startfile('chatc.py')
+        event.Skip()
+    def mas(self,event):
+        os.startfile('MAS.py')
+        event.Skip()
     def hovered_back(self,event):
         self.back.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
@@ -597,6 +620,12 @@ class WebPage(wx.Panel):
     def leave_new(self,event):
         self.new.SetForegroundColour('lightgray')
         event.Skip()
+    def hovered_sm(self,event):
+        self.SM.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_sm(self,event):
+        self.SM.SetForegroundColour('lightgray')
+        event.Skip()
     def eadh(self,event):
         global hisd
         if hisd == 'True':
@@ -617,6 +646,8 @@ class WebPage(wx.Panel):
         self.PopupMenu(self.page_menu)
     def sshowf2(self,event):
         self.PopupMenu(self.optional_menu)
+    def sshowf3(self,event):
+        self.PopupMenu(self.sm_menu)
     def open_theme(self,event):
         theme_tab = themepage(self.parent)
         self.parent.AddPage(theme_tab, caption="XVX Browser theme", select=False)
@@ -888,8 +919,17 @@ class Browser(wx.Frame):
         self.hovered_page = None
         self.hover_timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.on_hover_timer)
+        self.Bind(wx.EVT_CLOSE, self.OnClose)
         self.history_closed = []
         self.load_notebook()
+    def OnClose(self, event):
+        dlg = wx.MessageDialog(self, "Are you sure you want to close?", "Confirmation",
+                               wx.YES_NO | wx.ICON_QUESTION)
+        result = dlg.ShowModal()
+        if result == wx.ID_NO:
+            event.Veto()
+        else:
+            exit()
     def load_notebook(self):
         self.panel = panel = wx.Panel(self)
         box = wx.BoxSizer(wx.HORIZONTAL)
