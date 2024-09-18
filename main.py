@@ -23,6 +23,7 @@ validurl = False
 bookmarks = []
 lm = 'False'
 sbmc = 'True'
+CAD = False
 par = None
 asasa = None
 hisd = 'False'
@@ -32,14 +33,15 @@ q2 = 'True'
 q3 = 'True'
 class themepage(wx.Panel):
     def __init__(self,parent):
-        global bg,tex,bn
+        global bg,tex,bn,CAD
         wx.Panel.__init__(self, parent=parent)
         self.parent = parent
         self.frame = wx.GetTopLevelParent(self)
+        self.frame.SetBackgroundColour(LIGHT_SCHEME['background'])
         self.sizer = wx.BoxSizer(wx.VERTICAL)
         self.new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
         self.new.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.new.SetForegroundColour('lightgray')
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         self.new.SetToolTip(wx.ToolTip('Open a new tab'))
         self.new.Bind(wx.EVT_ENTER_WINDOW, self.hovered_new)
         self.new.Bind(wx.EVT_LEAVE_WINDOW, self.leave_new)
@@ -69,6 +71,13 @@ class themepage(wx.Panel):
         self.input5 = wx.TextCtrl(self)
         self.label6 = wx.StaticText(self, label="Blue")
         self.input6 = wx.TextCtrl(self)
+        self.ch = wx.Button(self, label='check')
+        self.ch.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.ch.SetForegroundColour(LIGHT_SCHEME['text'])
+        self.ch.SetToolTip(wx.ToolTip('check if you can make a new theme'))
+        self.ch.Bind(wx.EVT_ENTER_WINDOW, self.hovered_ch)
+        self.ch.Bind(wx.EVT_LEAVE_WINDOW, self.leave_ch)
+        self.ch.Bind(wx.EVT_BUTTON, self.check)
         per2 = wx.StaticText(self, label=f"text({tex[0]},{tex[1]},{tex[2]}),(0,0,0)")
         row2_sizer.Add(self.label4, 0, wx.ALL, 5)
         row2_sizer.Add(self.input4, 0, wx.ALL, 5)
@@ -77,6 +86,7 @@ class themepage(wx.Panel):
         row2_sizer.Add(self.label6, 0, wx.ALL, 5)
         row2_sizer.Add(self.input6, 0, wx.ALL, 5)
         row2_sizer.Add(per2,0,wx.ALL,5)
+        row2_sizer.Add(self.ch, 0, wx.ALL, 5)
         self.sizer.Add(row2_sizer, 0, wx.ALL, 5)
         row3_sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.label7 = wx.StaticText(self, label="Red")
@@ -86,8 +96,14 @@ class themepage(wx.Panel):
         self.label9 = wx.StaticText(self, label="Blue")
         self.input9 = wx.TextCtrl(self)
         per3 = wx.StaticText(self, label=f"Buttons({bn[0]},{bn[1]},{bn[2]}),(200,200,200)")
-        send = wx.Button(self,label='save changes')
-        send.Bind(wx.EVT_BUTTON,self.doit)
+        self.send = wx.Button(self,label='save changes')
+        self.send.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.send.SetForegroundColour(LIGHT_SCHEME['text'])
+        self.send.SetToolTip(wx.ToolTip('save the new theme'))
+        self.send.Bind(wx.EVT_ENTER_WINDOW, self.hovered_send)
+        self.send.Bind(wx.EVT_LEAVE_WINDOW, self.leave_send)
+        self.send.Bind(wx.EVT_BUTTON,self.doit)
+        self.send.Disable()
         row3_sizer.Add(self.label7, 0, wx.ALL, 5)
         row3_sizer.Add(self.input7, 0, wx.ALL, 5)
         row3_sizer.Add(self.label8, 0, wx.ALL, 5)
@@ -95,12 +111,36 @@ class themepage(wx.Panel):
         row3_sizer.Add(self.label9, 0, wx.ALL, 5)
         row3_sizer.Add(self.input9, 0, wx.ALL, 5)
         row3_sizer.Add(per3, 0, wx.ALL, 10)
-        row3_sizer.Add(send,0,wx.BOTTOM|wx.CENTER,5)
+        row3_sizer.Add(self.send,0,wx.BOTTOM|wx.CENTER,5)
         self.sizer.Add(row3_sizer, 0, wx.ALL, 5)
         self.SetSizer(self.sizer)
         self.Layout()
+    def check(self,event):
+        global CAD
+        if self.input1.GetValue() != '':
+            CAD = True
+        if self.input2.GetValue() != '':
+            CAD = True
+        if self.input3.GetValue() != '':
+            CAD = True
+        if self.input4.GetValue() != '':
+            CAD = True
+        if self.input5.GetValue() != '':
+            CAD = True
+        if self.input6.GetValue() != '':
+            CAD = True
+        if self.input7.GetValue() != '':
+            CAD = True
+        if self.input8.GetValue() != '':
+            CAD = True
+        if self.input9.GetValue() != '':
+            CAD = True
+        if CAD is True:
+            self.send.Enable()
+            CAD = False
+        event.Skip()
     def doit(self,event):
-        global LIGHT_SCHEME,bg,tex,bn
+        global LIGHT_SCHEME,bg,tex,bn,CAD
         if self.input1.GetValue() == '':
             v1=254
         else:
@@ -114,15 +154,15 @@ class themepage(wx.Panel):
         else:
             v3=int(self.input3.GetValue())
         if self.input4.GetValue() == '':
-            v4=254
+            v4=0
         else:
             v4=int(self.input4.GetValue())
         if self.input5.GetValue() == '':
-            v5=254
+            v5=0
         else:
             v5=int(self.input5.GetValue())
         if self.input6.GetValue() == '':
-            v6=254
+            v6=0
         else:
             v6=int(self.input6.GetValue())
         if self.input7.GetValue() == '':
@@ -143,12 +183,25 @@ class themepage(wx.Panel):
         bg = [v1,v2,v3]
         tex = [v4,v5,v6]
         bn = [v7,v8,v9]
+        self.send.Disable()
         event.Skip()
     def hovered_new(self,event):
         self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_new(self,event):
-        self.new.SetForegroundColour('lightgray')
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def hovered_ch(self,event):
+        self.ch.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_ch(self,event):
+        self.ch.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def hovered_send(self,event):
+        self.send.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_send(self,event):
+        self.send.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def tab_new(self, event):
         page = WebPage(self.parent, [])
@@ -164,20 +217,21 @@ class HistoryPage(wx.Panel):
         self.parent = parent
         self.history_var = history_var
         self.frame = wx.GetTopLevelParent(self)
+        self.frame.SetBackgroundColour(LIGHT_SCHEME['background'])
         pagesizer = wx.BoxSizer(wx.VERTICAL)
         self.listbox = listbox = wx.ListBox(self)
         top_bar_container = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, label='Double-click on an item to open it.', style=wx.ST_ELLIPSIZE_END)
         self.new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
         self.new.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.new.SetForegroundColour('lightgray')
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         self.new.Bind(wx.EVT_ENTER_WINDOW, self.hovered_new)
         self.new.Bind(wx.EVT_LEAVE_WINDOW, self.leave_new)
         new_tip = wx.ToolTip('Open a new tab')
         self.new.SetToolTip(new_tip)
         self.delh = wx.Button(self, label='-', size=(30, 30), style=wx.DOUBLE_BORDER)
         self.delh.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.delh.SetForegroundColour('lightgray')
+        self.delh.SetForegroundColour(LIGHT_SCHEME['text'])
         self.delh.Bind(wx.EVT_ENTER_WINDOW, self.hovered_delh)
         self.delh.Bind(wx.EVT_LEAVE_WINDOW, self.leave_delh)
         d_tip = wx.ToolTip('delete selected item from history')
@@ -197,13 +251,13 @@ class HistoryPage(wx.Panel):
         self.delh.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_delh(self,event):
-        self.delh.SetForegroundColour('lightgray')
+        self.delh.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def hovered_new(self,event):
         self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_new(self,event):
-        self.new.SetForegroundColour('lightgray')
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def refresh(self):
         if self.open:
@@ -246,25 +300,36 @@ class SourceCode(wx.Panel):
         self.parent = parent
         self.history_var = history_var
         self.frame = wx.GetTopLevelParent(self)
+        self.frame.SetBackgroundColour(LIGHT_SCHEME['background'])
         pagesizer = wx.BoxSizer(wx.VERTICAL)
         self.source = source = wx.TextCtrl(self, *args, **kwargs)
         top_bar_container = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, label=('Source: ' + windowurl), style=wx.ST_ELLIPSIZE_END)
-        new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.new.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
+        self.new.Bind(wx.EVT_ENTER_WINDOW, self.hovered_new)
+        self.new.Bind(wx.EVT_LEAVE_WINDOW, self.leave_new)
         new_tip = wx.ToolTip('Open a new tab')
-        new.SetToolTip(new_tip)
+        self.new.SetToolTip(new_tip)
         top_bar_container.Add(label, 1, wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
         top_bar_container.AddSpacer(30)
-        top_bar_container.Add(new, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
+        top_bar_container.Add(self.new, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
         pagesizer.Add(top_bar_container, proportion=False, flag=wx.EXPAND)
         pagesizer.Add(source, proportion=True, flag=wx.EXPAND)
-        new.Bind(wx.EVT_BUTTON, self.tab_new)
+        self.new.Bind(wx.EVT_BUTTON, self.tab_new)
         self.SetSizer(pagesizer)
     def on_select(self):
         self.frame.SetTitle(self.name)
     def tab_new(self, event):
         page = WebPage(self.parent, self.history_var)
         self.parent.AddPage(page, caption="Loading", select=True)
+    def hovered_new(self,event):
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_new(self,event):
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
     def on_close(self):
         pass
 class BookmarkPage(wx.Panel):
@@ -275,20 +340,21 @@ class BookmarkPage(wx.Panel):
         self.parent = parent
         self.bookmarks = bo1okmarks
         self.frame = wx.GetTopLevelParent(self)
+        self.frame.SetBackgroundColour(LIGHT_SCHEME['background'])
         pagesizer = wx.BoxSizer(wx.VERTICAL)
         self.listbox = listbox = wx.ListBox(self)
         top_bar_container = wx.BoxSizer(wx.HORIZONTAL)
         label = wx.StaticText(self, label='Double-click on an item to open it.', style=wx.ST_ELLIPSIZE_END)
         self.new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
         self.new.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.new.SetForegroundColour('lightgray')
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         self.new.Bind(wx.EVT_ENTER_WINDOW, self.hovered_new)
         self.new.Bind(wx.EVT_LEAVE_WINDOW, self.leave_new)
         new_tip = wx.ToolTip('Open a new tab')
         self.new.SetToolTip(new_tip)
         self.delb = wx.Button(self, label='-', size=(30, 30), style=wx.DOUBLE_BORDER)
         self.delb.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.delb.SetForegroundColour('lightgray')
+        self.delb.SetForegroundColour(LIGHT_SCHEME['text'])
         self.delb.Bind(wx.EVT_ENTER_WINDOW, self.hovered_delb)
         self.delb.Bind(wx.EVT_LEAVE_WINDOW, self.leave_delb)
         db_tip = wx.ToolTip('delete selected item from bookmarks')
@@ -308,13 +374,13 @@ class BookmarkPage(wx.Panel):
         self.delb.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_delb(self,event):
-        self.delb.SetForegroundColour('lightgray')
+        self.delb.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def hovered_new(self,event):
         self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_new(self,event):
-        self.new.SetForegroundColour('lightgray')
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def deleteb(self,event):
         index = event.GetSelection()
@@ -377,21 +443,21 @@ class WebPage(wx.Panel):
         self.top_bar_container = top_bar_container = wx.FlexGridSizer(1, 10, 4, 4)
         self.back = back = wx.Button(self, label='<', size=(30, 30), style=wx.DOUBLE_BORDER)
         self.back.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.back.SetForegroundColour('lightgray')
+        self.back.SetForegroundColour(LIGHT_SCHEME['text'])
         self.back.Bind(wx.EVT_ENTER_WINDOW, self.hovered_back)
         self.back.Bind(wx.EVT_LEAVE_WINDOW, self.leave_back)
         back_tip = wx.ToolTip('Go back one page')
         back.SetToolTip(back_tip)
         self.forward = forward = wx.Button(self, label='>', size=(30, 30), style=wx.DOUBLE_BORDER)
         self.forward.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.forward.SetForegroundColour('lightgray')
+        self.forward.SetForegroundColour(LIGHT_SCHEME['text'])
         self.forward.Bind(wx.EVT_ENTER_WINDOW, self.hovered_forward)
         self.forward.Bind(wx.EVT_LEAVE_WINDOW, self.leave_forward)
         forward_tip = wx.ToolTip('Go forward one page')
         forward.SetToolTip(forward_tip)
         self.reload = reload = wx.Button(self, label='⟳', size=(30, 30), style=wx.DOUBLE_BORDER)
         self.reload.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.reload.SetForegroundColour('lightgray')
+        self.reload.SetForegroundColour(LIGHT_SCHEME['text'])
         self.reload.Bind(wx.EVT_ENTER_WINDOW, self.hovered_reload)
         self.reload.Bind(wx.EVT_LEAVE_WINDOW, self.leave_reload)
         reload_tip = wx.ToolTip('Reload current page')
@@ -405,26 +471,26 @@ class WebPage(wx.Panel):
         self.fulltitle.SetMinSize(geoaka)
         self.new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
         self.new.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.new.SetForegroundColour('lightgray')
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         self.new.Bind(wx.EVT_ENTER_WINDOW, self.hovered_new)
         self.new.Bind(wx.EVT_LEAVE_WINDOW, self.leave_new)
         self.new_tip = wx.ToolTip('Open a new tab')
         self.new.SetToolTip(self.new_tip)
         self.buttosn = wx.Button(self, label="☰", size=(30, 30), style=wx.DOUBLE_BORDER)
         self.buttosn.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.buttosn.SetForegroundColour('lightgray')
+        self.buttosn.SetForegroundColour(LIGHT_SCHEME['text'])
         self.buttosn.Bind(wx.EVT_ENTER_WINDOW, self.hovered_op1)
         self.buttosn.Bind(wx.EVT_LEAVE_WINDOW, self.leave_op1)
         self.buttosn.SetToolTip(wx.ToolTip('show menu'))
         self.buttosn2 = wx.Button(self,label="⚙",size=(30, 30), style=wx.DOUBLE_BORDER)
         self.buttosn2.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.buttosn2.SetForegroundColour('lightgray')
+        self.buttosn2.SetForegroundColour(LIGHT_SCHEME['text'])
         self.buttosn2.SetFont(wx.Font(15, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, 'Consolas'))
         self.buttosn2.Bind(wx.EVT_ENTER_WINDOW, self.hovered_op2)
         self.buttosn2.SetToolTip(wx.ToolTip('General Settings'))
         self.SM = wx.Button(self, label="❃", size=(30, 30), style=wx.DOUBLE_BORDER)
         self.SM.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.SM.SetForegroundColour('lightgray')
+        self.SM.SetForegroundColour(LIGHT_SCHEME['text'])
         self.SM.SetFont(wx.Font(19, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, 'Consolas'))
         self.SM.Bind(wx.EVT_ENTER_WINDOW, self.hovered_sm)
         self.SM.Bind(wx.EVT_LEAVE_WINDOW, self.leave_sm)
@@ -579,52 +645,52 @@ class WebPage(wx.Panel):
         self.k = 0
         self.SetSizer(pagesizer)
     def cts(self,event):
-        os.startfile('chatc.py')
+        os.startfile('C:\\XVX_Browser1.4\\app\\app\\chatc.exe')
         event.Skip()
     def mas(self,event):
-        os.startfile('MAS.py')
+        os.startfile('C:\\XVX_Browser1.4\\app\\app\\MAS.exe')
         event.Skip()
     def hovered_back(self,event):
         self.back.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_back(self,event):
-        self.back.SetForegroundColour('lightgray')
+        self.back.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def hovered_forward(self,event):
         self.forward.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_forward(self,event):
-        self.forward.SetForegroundColour('lightgray')
+        self.forward.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def hovered_reload(self,event):
         self.reload.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_reload(self,event):
-        self.reload.SetForegroundColour('lightgray')
+        self.reload.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def hovered_op1(self,event):
         self.buttosn.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_op1(self,event):
-        self.buttosn.SetForegroundColour('lightgray')
+        self.buttosn.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def hovered_op2(self,event):
         self.buttosn2.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_op2(self,event):
-        self.buttosn2.SetForegroundColour('lightgray')
+        self.buttosn2.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def hovered_new(self,event):
         self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_new(self,event):
-        self.new.SetForegroundColour('lightgray')
+        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def hovered_sm(self,event):
         self.SM.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_sm(self,event):
-        self.SM.SetForegroundColour('lightgray')
+        self.SM.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def eadh(self,event):
         global hisd
@@ -652,12 +718,15 @@ class WebPage(wx.Panel):
         theme_tab = themepage(self.parent)
         self.parent.AddPage(theme_tab, caption="XVX Browser theme", select=False)
     def turnbacktodth(self,event):
-        global LIGHT_SCHEME
+        global LIGHT_SCHEME,bg,tex,bn
         LIGHT_SCHEME = {
             'background': wx.Colour(254, 254, 254),  # Dark gray
             'text': wx.Colour(0, 0, 0),
             'button_normal': wx.Colour(200, 200, 200),
         }
+        bg = [254, 254, 254]
+        tex = [0, 0, 0]
+        bn = [200, 200, 200]
     def bookmarksadd(self,event):
         if sbmc == 'True':
             try:
@@ -950,7 +1019,7 @@ class Browser(wx.Frame):
         except:
             pass
         if self.notebook.GetPageCount() <= 1:
-            self.Close()
+            exit()
     def on_page_select(self, event):
         self.notebook.GetCurrentPage().on_select()
     def on_hover_timer(self, event):

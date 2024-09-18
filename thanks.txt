@@ -7,4 +7,4 @@ freeconvert(www.freeconvert.com) as the website to convert file format into anot
 note:the chain.ico was created by https://www.iconfinder.com/kmgdesignid
 note:the server.ico was created by https://www.vecteezy.com/
 
---NOTE:THIS PROJECT ISN'T SUPPORTED BY 'freeconvert' or 'wallpaperaccess'' or any other person or company or group--
+--NOTE:THIS PROJECT ISN'T SUPPORTED BY 'freeconvert' or 'wallpaperaccess' or any other person or company or group--

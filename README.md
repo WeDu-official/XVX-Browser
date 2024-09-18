@@ -7,7 +7,28 @@ because we don't track anyone, the source code is open, and we didn't hide anyth
 
 that tracks people or anything like that.
 
-note: this browser depends on duckduckgo search engine.
+note: this browser depends on DuckDuckGo search engine.
+
+-THE NEW 1.4-A(ALL DONE) UPDATE FEATURES-
+
+this update would be the last update for the 1.4 series and we in it fix a lot of bugs and this update would come with the first ever documentation for XVX Browser we fixed all the bug and even theme problems and bug and we added even the check button so it wouldn't allow to you to save the new theme if you wrote nothing to prevent the
+glitch of happening and prevent that it might be used as a way to turn to the default theme because it wouldn't
+look the same and it has many problems and for some people when the made a theme the text color in buttons wasn't
+the best and they have even like some tab using this bad unreadable text color so when they go to theme page
+they change the text into more readable one all new page are using the old text but the old pages aren't so you can just hover on the buttons in the old pages and you can see that the text is changing from the old to the new
+and this is to just save and make the user old pages much more usable and this update would be the last update for long period of time and it's been created for long time support and high stability.
+
+-THE NEW 1.4-U(Ultra) UPDATE FEATURES-
+
+we added to the browser some features which allow to you to make a local host server and it can handle two users in the server to talk between each other with very strong system which doesn't allow to anyone after the two 
+first users connection so any one after them can't join and even if they went out of the server they can't come
+back they should open a new server and that is max level protection.
+
+-THE NEW 1.4-N(new installation system) UPDATE FEATURES-
+
+nearly the browser is the same but the app version of it the installer became much easier and better without like
+two installer without even counting the one that you install it from our website or here but now it became much better.
+
 
 -THE NEW 1.4 UPDATE FEATURES-
 
