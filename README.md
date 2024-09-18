@@ -30,6 +30,17 @@ nearly the browser is the same but the app version of it the installer became mu
 two installer without even counting the one that you install it from our website or here but now it became much better.
 
 
+-THE NEW 1.4-U(Ultra) UPDATE FEATURES-
+
+we added to the browser some features which allow to you to make a local host server and it can handle two users in the server to talk between each other with very strong system which doesn't allow to anyone after the two 
+first users connection so any one after them can't join and even if they went out of the server they can't come
+back they should open a new server and that is max level protection.
+
+-THE NEW 1.4-N(new installation system) UPDATE FEATURES-
+
+nearly the browser is the same but the app version of it the installer became much easier and better without like
+two installer without even counting the one that you install it from our website or here but now it became much better.
+
 -THE NEW 1.4 UPDATE FEATURES-
 
 1-you can change buttons,text,background(buttons-holding-tab)
