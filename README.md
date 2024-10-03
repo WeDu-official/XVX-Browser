@@ -9,14 +9,24 @@ that tracks people or anything like that.
 
 note: this browser depends on DuckDuckGo search engine.
 
+-THE NEW 1.4-AA(ALL DONE 'addon') UPDATE FEATURES-
+
+this update is like an addon for the previous update which adds new cache delete system that allow to you to either 
+clear the default cache folder or a PSCF(previously specified cache folder) chosen by you and we add the new "burn" 
+feature that would do the same as clear(Both normal and PSCF cases) plus clearing history and bookmarks
+
 -THE NEW 1.4-A(ALL DONE) UPDATE FEATURES-
 
-this update would be the last update for the 1.4 series and we in it fix a lot of bugs and this update would come with the first ever documentation for XVX Browser we fixed all the bug and even theme problems and bug and we added even the check button so it wouldn't allow to you to save the new theme if you wrote nothing to prevent the
+this update would be the last update for the 1.4 series and we in it fix a lot of bugs and this update would come 
+with the first ever documentation for XVX Browser we fixed all the bug and even theme problems and bug and we 
+added even the check button so it wouldn't allow to you to save the new theme if you wrote nothing to prevent the
 glitch of happening and prevent that it might be used as a way to turn to the default theme because it wouldn't
 look the same and it has many problems and for some people when the made a theme the text color in buttons wasn't
 the best and they have even like some tab using this bad unreadable text color so when they go to theme page
-they change the text into more readable one all new page are using the old text but the old pages aren't so you can just hover on the buttons in the old pages and you can see that the text is changing from the old to the new
-and this is to just save and make the user old pages much more usable and this update would be the last update for long period of time and it's been created for long time support and high stability.
+they change the text into more readable one all new page are using the old text but the old pages aren't 
+so you can just hover on the buttons in the old pages and you can see that the text is changing from the old to the new
+and this is to just save and make the user old pages much more usable and this update would be the last 
+update for long period of time and it's been created for long time support and high stability.
 
 -THE NEW 1.4-U(Ultra) UPDATE FEATURES-
 

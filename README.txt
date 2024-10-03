@@ -7,6 +7,10 @@ that tracks people or anything like that.
 
 note: this browser depends on DuckDuckGo search engine.
 
+-THE NEW 1.4-AA(ALL DONE 'addon') UPDATE FEATURES-
+
+this update is like an addon for the previous update which adds new cache delete system that allow to you to either clear the default cache folder or a PSCF(previously specified cache folder) chosen by you and we add the new "burn" feature that would do the same as clear(Both normal and PSCF cases) plus clearing history and bookmarks
+
 -THE NEW 1.4-A(ALL DONE) UPDATE FEATURES-
 
 this update would be the last update for the 1.4 series and we in it fix a lot of bugs and this update would come with the first ever documentation for XVX Browser we fixed all the bug and even theme problems and bug and we added even the check button so it wouldn't allow to you to save the new theme if you wrote nothing to prevent the

@@ -6,6 +6,8 @@ import wx.aui
 import wx.lib.platebtn
 import wx.html2
 import wx.lib.agw.aui.tabart
+import tkinter as tk
+from tkinter.font import Font
 bg = [254,254,254]
 tex = [0,0,0]
 bn = [200, 200, 200]
@@ -359,14 +361,23 @@ class BookmarkPage(wx.Panel):
         self.delb.Bind(wx.EVT_LEAVE_WINDOW, self.leave_delb)
         db_tip = wx.ToolTip('delete selected item from bookmarks')
         self.delb.SetToolTip(db_tip)
+        self.dela = wx.Button(self, label='--', size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.dela.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
+        self.dela.SetForegroundColour(LIGHT_SCHEME['text'])
+        self.dela.Bind(wx.EVT_ENTER_WINDOW, self.hovered_dela)
+        self.dela.Bind(wx.EVT_LEAVE_WINDOW, self.leave_dela)
+        da_tip = wx.ToolTip('delete all items from bookmarks')
+        self.dela.SetToolTip(da_tip)
         top_bar_container.Add(label, 1, wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
         top_bar_container.AddSpacer(30)
         top_bar_container.Add(self.delb, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
         top_bar_container.Add(self.new, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
+        top_bar_container.Add(self.dela, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
         pagesizer.Add(top_bar_container, proportion=False, flag=wx.EXPAND)
         pagesizer.Add(listbox, proportion=True, flag=wx.EXPAND)
         self.delb.Bind(wx.EVT_BUTTON, self.deleteb)
         self.new.Bind(wx.EVT_BUTTON, self.tab_new)
+        self.dela.Bind(wx.EVT_BUTTON, self.da)
         self.Bind(wx.EVT_LISTBOX_DCLICK, self.open_link)
         self.SetSizer(pagesizer)
         self.refresh()
@@ -376,11 +387,24 @@ class BookmarkPage(wx.Panel):
     def leave_delb(self,event):
         self.delb.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
+    def hovered_dela(self,event):
+        self.dela.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def leave_dela(self,event):
+        self.dela.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
     def hovered_new(self,event):
         self.new.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def leave_new(self,event):
         self.new.SetForegroundColour(LIGHT_SCHEME['text'])
+        event.Skip()
+    def da(self,event):
+        global bookmarks
+        self.bookmarks = []
+        write = open('bookmarks.txt', 'w')
+        write.write("")
+        write.close()
         event.Skip()
     def deleteb(self,event):
         index = event.GetSelection()
@@ -580,9 +604,9 @@ class WebPage(wx.Panel):
         self.optional_menu.Append(self.menu_lm)
         self.optional_menu.Append(self.menu_dish)
         self.page_menu = wx.Menu()
-        menu_zoom = wx.MenuItem(settings_menu, 10, "Change zoom")
-        self.menu_contextmenu = menu_contextmenu = wx.MenuItem(settings_menu, 11, "Enable context menu: " + q2)
-        self.menu_historyenabled = menu_historyenabled = wx.MenuItem(settings_menu, 12, "Page forever lock")
+        menu_zoom = wx.MenuItem(settings_menu, 15, "Change zoom")
+        self.menu_contextmenu = menu_contextmenu = wx.MenuItem(settings_menu, 16, "Enable context menu: " + q2)
+        self.menu_historyenabled = menu_historyenabled = wx.MenuItem(settings_menu, 17, "Page forever lock")
         menu_source = wx.MenuItem(self.page_menu, 0, "Show source")
         menu_history = wx.MenuItem(self.page_menu, 1, "Show history")
         menu_print = wx.MenuItem(self.page_menu, 2, "Print this page")
@@ -593,11 +617,16 @@ class WebPage(wx.Panel):
         menu_addbookmarks = wx.MenuItem(self.page_menu, 7, "Add this website to bookmarks")
         menu_theme = wx.MenuItem(self.page_menu, 8, "Change Theme")
         menu_dth = wx.MenuItem(self.page_menu, 9, "Turn to default theme")
+        menu_burn = wx.MenuItem(self.page_menu, 10, "Burn !")
+        menu_burn2 = wx.MenuItem(self.page_menu, 11, "Burn PSCF !")
+        menu_cl1 = wx.MenuItem(self.page_menu, 12, "Clear !")
+        menu_cl2 = wx.MenuItem(self.page_menu, 13, "Clear PSCF !")
+        menu_pscf = wx.MenuItem(self.page_menu, 14, "change PSCF")
         settings_menu.Append(menu_zoom)
         settings_menu.AppendSeparator()
         try:
             self.html_window.EnableAccessToDevTools()
-            self.menu_devtools = menu_devtools = wx.MenuItem(settings_menu, 12, "Enable access to dev tools: " + q1)
+            self.menu_devtools = menu_devtools = wx.MenuItem(settings_menu, 18, "Enable access to dev tools: " + q1)
             settings_menu.Append(menu_devtools)
             settings_menu.Bind(wx.EVT_MENU, self.enable_devtools, menu_devtools)
         except:
@@ -620,6 +649,14 @@ class WebPage(wx.Panel):
         self.page_menu.Append(menu_bookmarks)
         self.page_menu.Append(menu_addbookmarks)
         self.page_menu.AppendSeparator()
+        self.page_menu.Append(menu_burn)
+        self.page_menu.Append(menu_burn2)
+        self.page_menu.AppendSeparator()
+        self.page_menu.Append(menu_cl1)
+        self.page_menu.Append(menu_cl2)
+        self.page_menu.AppendSeparator()
+        self.page_menu.Append(menu_pscf)
+        self.page_menu.AppendSeparator()
         self.page_menu.AppendSubMenu(settings_menu, 'Page Settings')
         self.sm_menu.Bind(wx.EVT_MENU, self.mas, menu_sm1)
         self.sm_menu.Bind(wx.EVT_MENU, self.cts, menu_sm2)
@@ -635,7 +672,12 @@ class WebPage(wx.Panel):
         self.page_menu.Bind(wx.EVT_MENU, self.find_in_page, menu_find)
         self.page_menu.Bind(wx.EVT_MENU, self.open_theme, menu_theme)
         self.page_menu.Bind(wx.EVT_MENU, self.turnbacktodth, menu_dth)
+        self.page_menu.Bind(wx.EVT_MENU, self.burn1, menu_burn)
+        self.page_menu.Bind(wx.EVT_MENU, self.burn2, menu_burn2)
+        self.page_menu.Bind(wx.EVT_MENU, self.clear1, menu_cl1)
+        self.page_menu.Bind(wx.EVT_MENU, self.clear2, menu_cl2)
         self.page_menu.Bind(wx.EVT_MENU, self.dhistory, menu_dhistory)
+        self.page_menu.Bind(wx.EVT_MENU, self.cpscf, menu_pscf)
         self.page_menu.Bind(wx.EVT_MENU, self.downloadsfolder, menu_downloads)
         self.page_menu.Bind(wx.EVT_MENU, self.bookmark_minitab, menu_bookmarks)
         self.page_menu.Bind(wx.EVT_MENU, self.bookmarksadd, menu_addbookmarks)
@@ -644,11 +686,27 @@ class WebPage(wx.Panel):
         self.SM.Bind(wx.EVT_BUTTON, self.sshowf3)
         self.k = 0
         self.SetSizer(pagesizer)
+    def cpscf(self,event):
+        gui = tk.Tk()
+        gui.title('change PSCF')
+        gui.geometry('300x300')
+        tk.Label(gui,text='write PSCF').pack()
+        T = tk.Text(gui, height=13, width=52)
+        T.pack()
+        my_font = Font(family="Helvetica", size=12, weight="bold", slant="italic")
+        def sett():
+            of = open('coc.txt','w')
+            of.write(T.get("1.0",tk.END))
+            of.close()
+        tk.Button(gui, text='set', command=sett, bg='light blue', font=my_font, width=10, height=2).pack()
+        gui.mainloop()
+    def OnChar(self, event):
+        keycode = event.GetKeyCode()
     def cts(self,event):
-        os.startfile('C:\\XVX_Browser1.4\\app\\app\\chatc.exe')
+        os.startfile('chatc.py')
         event.Skip()
     def mas(self,event):
-        os.startfile('C:\\XVX_Browser1.4\\app\\app\\MAS.exe')
+        os.startfile('MAS.py')
         event.Skip()
     def hovered_back(self,event):
         self.back.SetForegroundColour(LIGHT_SCHEME['text'])
@@ -714,6 +772,54 @@ class WebPage(wx.Panel):
         self.PopupMenu(self.optional_menu)
     def sshowf3(self,event):
         self.PopupMenu(self.sm_menu)
+    def clear1(self,event):
+        dlg1 = wx.MessageDialog(self,'to clear data, the browser would restart itself.', 'confirmation', wx.YES_NO | wx.ICON_WARNING)
+        result = dlg1.ShowModal()
+        if result == wx.ID_NO:
+            pass
+        else:
+            os.startfile('clear.py')
+            exit()
+    def clear2(self,event):
+        dlg1 = wx.MessageDialog(self,'to clear data(PSCF), the browser would restart itself.', 'confirmation',wx.YES_NO | wx.ICON_WARNING)
+        result = dlg1.ShowModal()
+        if result == wx.ID_NO:
+            pass
+        else:
+            os.startfile('clearc.py')
+            exit()
+    def burn1(self,event):
+        global bookmarks
+        dlg1 = wx.MessageDialog(self,'to start burning, the browser would restart itself.', 'confirmation',wx.YES_NO | wx.ICON_WARNING)
+        result = dlg1.ShowModal()
+        if result == wx.ID_NO:
+            pass
+        else:
+            self.visited.clear()
+            bookmarks = []
+            self.bookmarks = []
+            write = open('bookmarks.txt', 'w')
+            write.write("")
+            write.close()
+            event.Skip()
+            os.startfile('clear.py')
+            exit()
+    def burn2(self,event):
+        global bookmarks
+        dlg1 = wx.MessageDialog(self,'to start burning(PSCF) , the browser would restart itself.', 'confirmation',wx.YES_NO | wx.ICON_WARNING)
+        result = dlg1.ShowModal()
+        if result == wx.ID_NO:
+            pass
+        else:
+            self.visited.clear()
+            bookmarks = []
+            self.bookmarks = []
+            write = open('bookmarks.txt', 'w')
+            write.write("")
+            write.close()
+            event.Skip()
+            os.startfile('clearc.py')
+            exit()
     def open_theme(self,event):
         theme_tab = themepage(self.parent)
         self.parent.AddPage(theme_tab, caption="XVX Browser theme", select=False)
