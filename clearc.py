@@ -23,4 +23,8 @@ def remove_folder_recursively(folder_path):
                 pass
     print(f"Folder '{folder_path}' and its contents have been removed.")
 remove_folder_recursively(folder_to_remove)
-os.startfile('main.py')
+o = open('chi2.txt','r')
+d = o.read()
+o.close()
+if d == '':
+    os.startfile('main.py')
