@@ -9,6 +9,8 @@ that tracks people or anything like that.
 
 note: this browser depends on DuckDuckGo search engine.
 -THE NEW 1.5 (AKA 'the skinakola update') UPDATE FEATURES-
+
+
 NOTE:THIS IS UPDATE IS THE BIGGEST UPDATE EVER AT THE TIME THAT IT CAME IN (25/10/2024)
 so with this update (the 1.5 update)
 we got:
@@ -30,6 +32,9 @@ we got:
 
 
 6-update to the cleaning system
+
+
+7-OH I nearly forgot but we fixed the current user name issue that in some computers the currnt user name is not the same as the current user path which caused some problems but we fixed it with this update
 
 -THE NEW 1.4-AA(ALL DONE 'addon') UPDATE FEATURES-
 
