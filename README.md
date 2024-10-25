@@ -8,6 +8,28 @@ because we don't track anyone, the source code is open, and we didn't hide anyth
 that tracks people or anything like that.
 
 note: this browser depends on DuckDuckGo search engine.
+-THE NEW 1.5 (AKA 'the skinakola update') UPDATE FEATURES-
+NOTE:THIS IS UPDATE IS THE BIGGEST UPDATE EVER AT THE TIME THAT IT CAME IN (25/10/2024)
+so with this update (the 1.5 update)
+we got:
+
+
+1-profiles
+
+
+2-incognito mode
+
+
+3-updating system
+
+
+4-new home page
+
+
+5-new background
+
+
+6-update to the cleaning system
 
 -THE NEW 1.4-AA(ALL DONE 'addon') UPDATE FEATURES-
 
