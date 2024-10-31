@@ -700,7 +700,7 @@ class WebPage(wx.Panel):
         page = WebPage(self.parent, self.visited, url=update_url)
         page.SetBackgroundColour(LIGHT_SCHEME['background'])
         self.parent.AddPage(page, caption="Loading", select=True)
-        current_user = os.environ['USERPROFILE']
+        current_user = os.path.basename(os.environ['USERPROFILE'])
         download_path = f"C:\\Users\\{current_user}\\Downloads\\XVXBROWSERUPD.pak"
         w = open('updatecommand1.bat', 'w')
         w.write(f'''setlocal enabledelayedexpansion
@@ -902,7 +902,7 @@ if errorlevel 1 (
         except FileNotFoundError:
             open('bookmarks.txt','x')
     def downloadsfolder(self,event):
-        current_user = os.environ['USERPROFILE']
+        current_user = os.path.basename(os.environ['USERPROFILE'])
         subprocess.Popen(f'explorer "C:\\Users\\{current_user}\\Downloads"')
     def on_key_down(self, event):
         key_code = event.GetKeyCode()

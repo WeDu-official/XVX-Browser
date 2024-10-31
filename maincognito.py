@@ -262,7 +262,7 @@ class themepage(wx.Panel):
     def on_close(self):
         self.open = False
     def on_select(self):
-        self.frame.SetTitle("XVX Browser:incognito mode History")
+        self.frame.SetTitle("XVX Browser: incognito mode History")
 class SourceCode(wx.Panel):
     def __init__(self, parent, windowname, windowurl, *args, **kwargs):
         wx.Panel.__init__(self, parent)
@@ -417,7 +417,7 @@ class BookmarkPage(wx.Panel):
     def on_close(self):
         self.open = False
     def on_select(self):
-        self.frame.SetTitle("XVX Browser:incognito mode History")
+        self.frame.SetTitle("XVX Browser: incognito mode History")
 class WebPage(wx.Panel):
     def __init__(self, parent, url=f"file:///{os.path.dirname(os.path.abspath(__file__)).replace('\\','/')}/home_incognito.html"):
         global par,asasa
@@ -638,10 +638,10 @@ class WebPage(wx.Panel):
 
     def upd(self, event):
         global update_url
-        page = WebPage(self.parent, self.visited, url=update_url)
+        page = WebPage(self.parent, url=update_url)
         page.SetBackgroundColour(LIGHT_SCHEME['background'])
         self.parent.AddPage(page, caption="Loading", select=True)
-        current_user = os.environ['USERPROFILE']
+        current_user = os.path.basename(os.environ['USERPROFILE'])
         download_path = f"C:\\Users\\{current_user}\\Downloads\\XVXBROWSERUPD.pak"
         w = open('updatecommand1.bat', 'w')
         w.write(f'''setlocal enabledelayedexpansion
@@ -731,7 +731,7 @@ if errorlevel 1 (
         self.PopupMenu(self.sm_menu)
     def open_theme(self,event):
         theme_tab = themepage(self.parent)
-        self.parent.AddPage(theme_tab, caption="XVX Browser:incognito mode theme", select=False)
+        self.parent.AddPage(theme_tab, caption="XVX Browser: incognito mode theme", select=False)
     def turnbacktodth(self,event):
         global LIGHT_SCHEME,bg,tex,bn
         LIGHT_SCHEME = {
@@ -779,7 +779,7 @@ if errorlevel 1 (
         except FileNotFoundError:
             open('bookmarksi.txt','x')
     def downloadsfolder(self,event):
-        current_user = os.environ['USERPROFILE']
+        current_user = os.path.basename(os.environ['USERPROFILE'])
         subprocess.Popen(f'explorer "C:\\Users\\{current_user}\\Downloads"')
     def on_key_down(self, event):
         key_code = event.GetKeyCode()
@@ -789,9 +789,9 @@ if errorlevel 1 (
     def show_source(self, event):
         title = self.html_window.GetCurrentTitle()
         if title == "":
-            title = ("XVX Browser:incognito mode - Source for " + self.html_window.GetCurrentURL())
+            title = ("XVX Browser: incognito mode - Source for " + self.html_window.GetCurrentURL())
         else:
-            title = ("XVX Browser:incognito mode - Source for " + self.html_window.GetCurrentTitle())
+            title = ("XVX Browser: incognito mode - Source for " + self.html_window.GetCurrentTitle())
         page = SourceCode(self.parent, windowname=title, windowurl=self.html_window.GetCurrentURL(), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.HSCROLL)
         page.source.SetValue(self.html_window.GetPageSource())
         self.parent.AddPage(page, caption=title, select=False)
@@ -959,7 +959,7 @@ if errorlevel 1 (
         divider = ""
         if title != "":
             divider = " - "
-        self.frame.SetTitle("XVX Browser:incognito mode")
+        self.frame.SetTitle("XVX Browser: incognito mode")
     def on_close(self):
         if self.html_window.IsBusy():
             self.html_window.Stop()
@@ -1074,7 +1074,7 @@ def st():
     write0.write("")
     write0.close()
     app = wx.App()
-    browser = Browser(None, title='XVX Browser:incognito mode')
+    browser = Browser(None, title='XVX Browser: incognito mode')
     browser.Show()
     app.MainLoop()
 def main():

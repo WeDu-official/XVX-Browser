@@ -1,5 +1,5 @@
 import os
-folder_to_remove:str = f"C:\\Users\\{os.environ['USERPROFILE']}\\AppData\\Local\\main4"
+folder_to_remove:str = f"C:\\Users\\{os.path.basename(os.environ['USERPROFILE'])}\\AppData\\Local\\main4"
 def remove_folder_recursively(folder_path):
     if not os.path.isdir(folder_path):
         print(f"Error: '{folder_path}' is not a directory.")

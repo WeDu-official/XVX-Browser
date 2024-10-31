@@ -1,24 +1,42 @@
 # XVX Browser
+
 it's a very basic and minimal Browser that its creators don't track you
-
-because we don't track anyone, the source code is open, and we didn't hide anything 
-
+because we don't track anyone, the source code is open, and we didn't hide anything
 that tracks people or anything like that.
 
 note: this browser depends on DuckDuckGo search engine.
 
+-THE NEW 1.5 (AKA 'the skinakola update') UPDATE FEATURES-
+
+NOTE:THIS IS UPDATE IS THE BIGGEST UPDATE EVER AT THE TIME THAT IT CAME IN (25/10/2024)
+so with this update (the 1.5 update) we got:
+
+1-profiles
+2-incognito mode
+3-updating system
+4-new home page
+5-new background
+6-update to the cleaning system
+7-OH I nearly forgot but we fixed the current user name issue that in some computers the current user name is not the same as the current user path which caused some problems but we fixed it with this update
+
 -THE NEW 1.4-AA(ALL DONE 'addon') UPDATE FEATURES-
 
-this update is like an addon for the previous update which adds new cache delete system that allow to you to either clear the default cache folder or a PSCF(previously specified cache folder) chosen by you and we add the new "burn" feature that would do the same as clear(Both normal and PSCF cases) plus clearing history and bookmarks
+this update is like an addon for the previous update which adds new cache delete system that allow to you to either 
+clear the default cache folder or a PSCF(previously specified cache folder) chosen by you and we add the new "burn" 
+feature that would do the same as clear(Both normal and PSCF cases) plus clearing history and bookmarks
 
 -THE NEW 1.4-A(ALL DONE) UPDATE FEATURES-
 
-this update would be the last update for the 1.4 series and we in it fix a lot of bugs and this update would come with the first ever documentation for XVX Browser we fixed all the bug and even theme problems and bug and we added even the check button so it wouldn't allow to you to save the new theme if you wrote nothing to prevent the
+this update would be the last update for the 1.4 series and we in it fix a lot of bugs and this update would come 
+with the first ever documentation for XVX Browser we fixed all the bug and even theme problems and bug and we 
+added even the check button so it wouldn't allow to you to save the new theme if you wrote nothing to prevent the
 glitch of happening and prevent that it might be used as a way to turn to the default theme because it wouldn't
 look the same and it has many problems and for some people when the made a theme the text color in buttons wasn't
 the best and they have even like some tab using this bad unreadable text color so when they go to theme page
-they change the text into more readable one all new page are using the old text but the old pages aren't so you can just hover on the buttons in the old pages and you can see that the text is changing from the old to the new
-and this is to just save and make the user old pages much more usable and this update would be the last update for long period of time and it's been created for long time support and high stability.
+they change the text into more readable one all new page are using the old text but the old pages aren't 
+so you can just hover on the buttons in the old pages and you can see that the text is changing from the old to the new
+and this is to just save and make the user old pages much more usable and this update would be the last 
+update for long period of time and it's been created for long time support and high stability.
 
 -THE NEW 1.4-U(Ultra) UPDATE FEATURES-
 
@@ -39,6 +57,7 @@ two installer without even counting the one that you install it from our website
 4-the page settings finally got fixed, and now it's functioning normally
 5-you can disable history so where ever you go you won't get recorded by the history
 page or anything like that
+
 6-zoom bar
 7-page forever lock mode
 8-other more complex things have being added
@@ -62,13 +81,14 @@ in the new bookmarks page
 
 1-under the url bar there is the website title bar
 2-the literal mode which it's by default False but when you
-activate it when you write like google.com it would not open because
-unlike when it's false it wouldn't correct it to https://google.com
-and this mode only use is when you want to open a file or use
+activate it when you write like google.com it would not open because 
+unlike when it's false it wouldn't correct it to https://google.com 
+and this mode only use is when you want to open a file or use 
 an url command like calculator:/
 3-small changes and bug fixes
 
 -THE 1.0 RELEASE CONTAINS-
+
 1-history and deleting history
 2-find in webpage
 3-tab based (you can open multiple websites in multiple different tabs)
