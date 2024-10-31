@@ -6,6 +6,27 @@ that tracks people or anything like that.
 
 note: this browser depends on DuckDuckGo search engine.
 
+-THE 1.5-F (fully fixed):
+
+this is the same as the 1.5 BIG FIXES
+but with the new documentation
+
+-THE 1.5 BIG FIXES:
+
+WE MADE THIS UPDATE TO JUST SAVE OUR AND YOUR ASS
+SEE THIS UPDATE IS IMPORTANT LIKE FREAKING IMPORTANT
+
+NOTE: DON'T NEVER INSTALL 1.5 VERSION INSTEAD INSTALL THIS ONE
+CUZ THIS VERSION FIXES BUGS THAT ARE VERY VERY BAD LIKE THE THE THIRD USER CAN NOT START AND THE IM DOESN'T WORK GREATLY AND
+
+ANDDDDDDDD THE UPDATE FEATURE WASN'T WORKING
+note: and with all of these serious stuff we made a very very small change that is too silly to say but it's changing this:
+
+XVX Browser: incognito mode
+to this: XVX Browser: incognito mode History
+
+SO WE MADE THIS UPDATE TO FIX OF THESE PROBLEMS
+
 -THE NEW 1.5 (AKA 'the skinakola update') UPDATE FEATURES-
 
 NOTE:THIS IS UPDATE IS THE BIGGEST UPDATE EVER AT THE TIME THAT IT CAME IN (25/10/2024)

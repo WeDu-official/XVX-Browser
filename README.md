@@ -8,6 +8,46 @@ because we don't track anyone, the source code is open, and we didn't hide anyth
 that tracks people or anything like that.
 
 note: this browser depends on DuckDuckGo search engine.
+
+
+----------------
+
+-THE 1.5-F (fully fixed):
+
+this is the same as the 1.5 BIG FIXES
+but with the new documentation
+
+----------------
+
+-THE 1.5 BIG FIXES:
+
+
+WE MADE THIS UPDATE TO JUST SAVE OUR AND YOUR ASS
+
+
+SEE THIS UPDATE IS IMPORTANT LIKE FREAKING IMPORTANT
+
+
+NOTE: DON'T NEVER INSTALL 1.5 VERSION INSTEAD INSTALL THIS ONE
+
+
+CUZ THIS VERSION FIXES BUGS THAT ARE VERY VERY BAD LIKE THE THE THIRD USER CAN NOT START AND THE IM DOESN'T WORK GREATLY AND
+
+
+ANDDDDDDDD THE UPDATE FEATURE WASN'T WORKING
+
+
+note: and with all of these serious stuff we made a very very small change that is too silly to say but it's changing this:
+XVX Browser: incognito mode
+
+
+to this: XVX Browser: incognito mode History
+
+
+SO WE MADE THIS UPDATE TO FIX OF THESE PROBLEMS
+
+------------------------------------------------------------------------
+
 -THE NEW 1.5 (AKA 'the skinakola update') UPDATE FEATURES-
 
 NOTE:THIS IS UPDATE IS THE BIGGEST UPDATE EVER AT THE TIME THAT IT CAME IN (25/10/2024)
@@ -35,11 +75,15 @@ we got:
 
 7-OH I nearly forgot but we fixed the current user name issue that in some computers the current user name is not the same as the current user path which caused some problems but we fixed it with this update
 
+----------------
+
 -THE NEW 1.4-AA(ALL DONE 'addon') UPDATE FEATURES-
 
 this update is like an addon for the previous update which adds new cache delete system that allow to you to either 
 clear the default cache folder or a PSCF(previously specified cache folder) chosen by you and we add the new "burn" 
 feature that would do the same as clear(Both normal and PSCF cases) plus clearing history and bookmarks
+
+----------------
 
 -THE NEW 1.4-A(ALL DONE) UPDATE FEATURES-
 
@@ -54,16 +98,22 @@ so you can just hover on the buttons in the old pages and you can see that the t
 and this is to just save and make the user old pages much more usable and this update would be the last 
 update for long period of time and it's been created for long time support and high stability.
 
+----------------
+
 -THE NEW 1.4-U(Ultra) UPDATE FEATURES-
 
 we added to the browser some features which allow to you to make a local host server and it can handle two users in the server to talk between each other with very strong system which doesn't allow to anyone after the two 
 first users connection so any one after them can't join and even if they went out of the server they can't come
 back they should open a new server and that is max level protection.
 
+----------------
+
 -THE NEW 1.4-N(new installation system) UPDATE FEATURES-
 
 nearly the browser is the same but the app version of it the installer became much easier and better without like
 two installer without even counting the one that you install it from our website or here but now it became much better.
+
+----------------
 
 -THE NEW 1.4 UPDATE FEATURES-
 
@@ -86,11 +136,15 @@ page or anything like that
 
 9-GUI fixes
 
+----------------
+
 -THE NEW 1.3 UPDATE FEATURES-
 
 1-fixing bug and the title bar problem
 
 2-better performance
+
+----------------
 
 -THE NEW 1.2 UPDATE FEATURES-
 
@@ -105,6 +159,8 @@ in the new bookmarks page
 
 5-fix the old menu which hides itself when maximizing the window
 
+----------------
+
 -THE NEW 1.1 UPDATE FEATURES-
 
 1-under the url bar there is the website title bar
@@ -116,6 +172,8 @@ and this mode only use is when you want to open a file or use
 an url command like calculator:/
 
 3-small changes and bug fixes
+
+----------------
 
 -THE 1.0 RELEASE CONTAINS-
 
