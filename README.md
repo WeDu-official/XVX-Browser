@@ -10,6 +10,13 @@ that tracks people or anything like that.
 note: this browser depends on DuckDuckGo search engine.
 
 
+-THE 1.5-SF (server fixes):
+
+finally we fixed the problem that made servers useless in XVX Browser after a very long time from the first 
+release but now it requires from you to write not only the port but the host number or computer id for example:
+
+192.168.0.108
+
 ----------------
 
 -THE 1.5-F (fully fixed):
