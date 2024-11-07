@@ -6,7 +6,7 @@ from tkinter import scrolledtext
 from tkinter import messagebox
 gu = tk.Tk()
 gu.title('CTS')
-gu.geometry('200x100')
+gu.geometry('200x170')
 gu.resizable(False,False)
 DARK_GREY = '#2F4550'
 MEDIUM_GREY = '#424951'
@@ -20,10 +20,16 @@ setup_label.pack()
 
 setup_textbox = tk.Entry(gu, font=FONT, bg=MEDIUM_GREY, fg=WHITE)
 setup_textbox.pack()
+
+setup_label2 = tk.Label(gu, text="Enter the server host", font=SMALL_FONT, bg=DARK_GREY, fg=WHITE)
+setup_label2.pack()
+
+setup_textbox2 = tk.Entry(gu, font=FONT, bg=MEDIUM_GREY, fg=WHITE)
+setup_textbox2.pack()
 def start():
-    global setup_textbox,DARK_GREY,MEDIUM_GREY,OCEAN_BLUE,WHITE,FONT,BUTTON_FONT,SMALL_FONT
+    global setup_textbox,setup_textbox2,DARK_GREY,MEDIUM_GREY,OCEAN_BLUE,WHITE,FONT,BUTTON_FONT,SMALL_FONT
     # ================Host & Port===============#
-    HOST = socket.gethostbyname(socket.gethostname())
+    HOST = setup_textbox2.get()
     PORT = int(setup_textbox.get())
     # ===============Colors for GUI================#
     # Creating a socket object
