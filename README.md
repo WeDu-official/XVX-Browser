@@ -11,7 +11,7 @@ that tracks people or anything like that.
 
 -THE 1.6 UPDATE (WEIRDO):
 
-WE DELETED BOTH 'Profiles' & 'Incognito mode(IM)'
+WE DELETED BOTH 'Profiles','documentation' & 'Incognito mode(IM)'
 
 and we fixed the blur in the website titles, and we added two other new features:
 
