@@ -4,14 +4,28 @@ it's a very basic and minimal Browser that its creators don't track you
 because we don't track anyone, the source code is open, and we didn't hide anything
 that tracks people or anything like that.
 
-note: this browser depends on DuckDuckGo search engine.
+-THE 1.6 UPDATE (WEIRDO):
 
--THE 1.5-F (fully fixed):
+WE DELETED BOTH 'profiles' & 'Incognito mode(IM)'
+
+and we fixed the blur in the website titles, and we added two other new features:
+
+1-changing background
+2-changing search engine
+
+-THE 1.5-SF UPDATE (server fixes):
+
+finally we fixed the problem that made servers useless in XVX Browser after a very long time from the first 
+release but now it requires from you to write not only the port but the host number or computer id for example:
+
+192.168.0.108
+
+-THE 1.5-F UPDATE (fully fixed):
 
 this is the same as the 1.5 BIG FIXES
 but with the new documentation
 
--THE 1.5 BIG FIXES:
+-THE 1.5 UPDATE BIG FIXES:
 
 WE MADE THIS UPDATE TO JUST SAVE OUR AND YOUR ASS
 SEE THIS UPDATE IS IMPORTANT LIKE FREAKING IMPORTANT

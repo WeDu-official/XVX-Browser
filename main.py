@@ -8,7 +8,195 @@ import wx.html2
 import wx.lib.agw.aui.tabart
 import tkinter as tk
 from tkinter.font import Font
-from tkinter import messagebox
+from tkinter.filedialog import askopenfilename
+searchengine = 1
+hardcoded = """<!DOCTYPE html>
+<html>
+<head>
+    <title>XVX Browser</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url"""
+hardcoded2 = """ /* Replace with your desired image */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            display: flex; /* Center the entire container */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .browser-container {
+            max-width: 800px; /* Adjust width as needed */
+            padding: 20px;
+            width: 80%; /* Make it 80% of the viewport width */
+        }
+
+        .header {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: column; /* Stack elements vertically */
+        }
+
+        .browser-title {
+            font-size: 40px;
+            font-weight: bold;
+            color: #443;
+            margin-bottom: auto; /* Push title to the top */
+        }
+
+        .search-bar {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%; /* Make it 100% of the container width */
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            padding: 5px;
+            font-size: 18px;
+            font-family: 'Arial', sans-serif;
+            placeholder: "Enter URL or search query"; /* Keep the placeholder */
+        }
+
+        .search-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px; /* Increased border radius */
+            padding: 12px 20px; /* Adjusted padding */
+            cursor: pointer;
+            font-weight: bold; /* Made text bolder */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-image: linear-gradient(to bottom, #008cff 0%, #007bff 100%);
+            opacity: 0.5; /* Make the button appear disabled when empty */
+            pointer-events: none; /* Prevent clicking when disabled */
+        }
+
+        .search-button:hover {
+            background-color: #0062cc;
+            transform: scale(1.05); /* Added slight hover animation */
+        }
+
+        .search-button:active {
+            background-color: #00509d;
+            transform: scale(0.95); /* Added active state animation */
+        }
+
+        .search-button.enabled {
+            opacity: 1; /* Make the button appear enabled when there's input */
+            pointer-events: auto; /* Allow clicking when enabled */
+        }
+
+        .content-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .browser-title {
+                font-size: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-container">
+        <div class="header">
+            <div class="browser-title">XVX Browser</div>
+            <div class="weather-info"></div>
+            <div class="time-info"></div>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search-bar" placeholder="Enter URL or search query">
+            <button class="search-button" id="search-button">Go</button>
+        </div>
+        <div class="content-area">
+        </div>
+    </div>
+    <script>
+        const searchBar = document.getElementById('search-bar');
+        const searchButton = document.getElementById('search-button');
+        const contentArea = document.querySelector('.content-area');
+
+        searchButton.disabled = true;
+
+        searchBar.addEventListener('input', () => {
+            searchButton.disabled = searchBar.value.trim() === '';
+            searchButton.classList.toggle('enabled', !searchButton.disabled);
+        });
+
+        searchButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default form submission behavior
+            const searchQuery = searchBar.value.trim();
+
+            if (searchQuery) {
+                // Read search engine preference from set.txt
+                let searchEngine = 2;
+                fetch('set.txt')
+                    .then(response => {
+                        if (response.ok) {
+                            console.log(response.text())
+                            return response.text();
+                        } else {
+                            throw new Error('Failed to read search engine preference from set.txt');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error reading search engine preference:', error);
+                    })
+                    .finally(() => {
+                        let engineUrl;
+                        switch (searchEngine) {
+                            case 1:
+                                engineUrl = `https://duckduckgo.com/?q=${encodeURIComponent(searchQuery)}`;
+                                break;
+                            case 2:
+                                engineUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+                                break;
+                            case 3:
+                                engineUrl = `https://www.bing.com/search?q=${encodeURIComponent(searchQuery)}`;
+                                break;
+                            case 4:
+                                engineUrl = `https://search.yahoo.com/search?q=${encodeURIComponent(searchQuery)}`;
+                                break;
+                            case 5:
+                                engineUrl = `https://www.ecosia.org/search?q=${encodeURIComponent(searchQuery)}`;
+                                break;
+                            case 6:
+                                engineUrl = `https://web.archive.org/`;
+                                break;
+                            default:
+                                console.warn('Invalid search engine preference in set.txt. Using DuckDuckGo.');
+                                engineUrl = `https://duckduckgo.com/?q=${encodeURIComponent(searchQuery)}&ia=web`;
+                                break;
+                        }
+
+                        window.location.href = engineUrl;
+                    });
+            }
+        });
+
+        // Handle Enter key press on the search bar
+        searchBar.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                searchButton.click();
+            }
+        });
+    </script>
+</body>
+</html>"""
 bg = [254,254,254]
 tex = [0,0,0]
 bn = [200, 200, 200]
@@ -594,14 +782,16 @@ class WebPage(wx.Panel):
         self.sm_menu = wx.Menu()
         self.menu_sm1 = menu_sm1 = wx.MenuItem(self.sm_menu, 0, "make a server")
         self.menu_sm2 = menu_sm2 = wx.MenuItem(self.sm_menu, 1, "join a server")
-        self.menu_sm3 = menu_sm3 = wx.MenuItem(self.sm_menu, 2, "choose profile")
-        self.menu_sm4 = menu_sm4 = wx.MenuItem(self.sm_menu, 3, "update")
+        self.menu_sm3 = menu_sm4 = wx.MenuItem(self.sm_menu, 2, "update")
+        self.menu_sm4 = menu_sm5 = wx.MenuItem(self.sm_menu, 3, "change background")
+        self.menu_sm5 = menu_sm6 = wx.MenuItem(self.sm_menu, 4, "change search engine")
         self.sm_menu.Append(self.menu_sm1)
         self.sm_menu.Append(self.menu_sm2)
         self.sm_menu.AppendSeparator()
-        self.sm_menu.Append(self.menu_sm3)
-        self.sm_menu.AppendSeparator()
         self.sm_menu.Append(self.menu_sm4)
+        self.sm_menu.Append(self.menu_sm5)
+        self.sm_menu.AppendSeparator()
+        self.sm_menu.Append(self.menu_sm3)
         self.optional_menu = wx.Menu()
         self.menu_dbookmarks = menu_dbookmarks = wx.MenuItem(self.optional_menu, 0, "Store bookmarks: " + sbmc)
         self.menu_lm = menu_lm = wx.MenuItem(self.optional_menu, 1, "Literal mode: " + lm)
@@ -667,8 +857,9 @@ class WebPage(wx.Panel):
         self.page_menu.AppendSubMenu(settings_menu, 'Page Settings')
         self.sm_menu.Bind(wx.EVT_MENU, self.mas, menu_sm1)
         self.sm_menu.Bind(wx.EVT_MENU, self.cts, menu_sm2)
-        self.sm_menu.Bind(wx.EVT_MENU, self.ucp, menu_sm3)
         self.sm_menu.Bind(wx.EVT_MENU, self.upd, menu_sm4)
+        self.sm_menu.Bind(wx.EVT_MENU, self.changebackground, menu_sm5)
+        self.sm_menu.Bind(wx.EVT_MENU, self.changesearchengine, menu_sm6)
         self.optional_menu.Bind(wx.EVT_MENU, self.csbmc, menu_dbookmarks)
         self.optional_menu.Bind(wx.EVT_MENU, self.clms, menu_lm)
         self.optional_menu.Bind(wx.EVT_MENU, self.eadh, menu_dish)
@@ -695,6 +886,79 @@ class WebPage(wx.Panel):
         self.SM.Bind(wx.EVT_BUTTON, self.sshowf3)
         self.k = 0
         self.SetSizer(pagesizer)
+    def changesearchengine(self,event):
+        root = tk.Tk()
+        root.title('CSE')
+        root.geometry('200x200')
+        root.resizable(False,False)
+        radiobutton_variable = tk.IntVar()
+        tk.Radiobutton(root, text="reset(duckduckgo)", variable=radiobutton_variable, value=1).pack()
+        tk.Radiobutton(root, text="google", variable=radiobutton_variable, value=2).pack()
+        tk.Radiobutton(root, text="bing", variable=radiobutton_variable, value=3).pack()
+        tk.Radiobutton(root, text="yahoo", variable=radiobutton_variable, value=4).pack()
+        tk.Radiobutton(root, text="ecosia", variable=radiobutton_variable, value=5).pack()
+        tk.Radiobutton(root, text="wayback machine", variable=radiobutton_variable, value=6).pack()
+        def sett():
+            global searchengine
+            searchengine = radiobutton_variable.get()
+
+            def replace_line(file_name, line_num, text):
+                lines = open(file_name, 'r').readlines()
+                lines[line_num] = text
+                out = open(file_name, 'w')
+                out.writelines(lines)
+                out.close()
+            replace_line('home.html',132,f'                let searchEngine = {searchengine};\n')
+        tk.Button(root, text='set',width=9,height=2,bg='lightblue',command=sett).pack()
+        root.mainloop()
+    def changebackground(self, event):
+        gui = tk.Tk()
+        gui.title('change background')
+        gui.geometry('280x230')
+        gui.resizable(False,False)
+        tk.Label(gui, text='write new background path').pack()
+        T = tk.Text(gui, height=9)
+        T.pack(fill='x')
+        my_font = Font(family="Helvetica", size=12, weight="bold", slant="italic")
+        def dialog():
+            filetypes = (
+                ('JPG files', '*.jpg'),
+                ('JPEG files', '*.jpeg'),
+                ('PNG files', '*.png'),
+                ('WebP files', '*.webp'),
+                ('GIF files', '*.gif'),
+                ('SVG files', '*.svg'),
+                ('All files', '*.*')
+            )
+            filename = tk.filedialog.askopenfilename(
+                title='Select a file...',
+                filetypes=filetypes,
+            )
+            d = open('bgt.txt','w')
+            d.write(filename)
+            d.close()
+            T.delete("1.0", "end")
+            T.insert("1.0", filename)
+        def rsett():
+            c = hardcoded + f"""("background.jpg");""" + hardcoded2
+            w = open('home.html', 'w')
+            w.write(c)
+            w.close()
+        def sett():
+            d = open('bgt.txt', 'r')
+            da = d.read()
+            d.close()
+            c = hardcoded + f"""("{da}");""" + hardcoded2
+            w = open('home.html', 'w')
+            w.write(c)
+            w.close()
+            d2 = open('bgt.txt', 'w')
+            d2.write('')
+            d2.close()
+        tk.Button(gui, text='📂', command=dialog, bg='light blue', font=my_font, width=7, height=2).place(x=10,y=175)
+        tk.Button(gui, text='reset', command=rsett, bg='light blue', font=my_font, width=7, height=2).place(x=100, y=175)
+        tk.Button(gui, text='set', command=sett, bg='light blue', font=my_font, width=7, height=2).place(x=190,y=175)
+        gui.mainloop()
     def upd(self, event):
         global update_url
         page = WebPage(self.parent, self.visited, url=update_url)
@@ -716,8 +980,6 @@ if errorlevel 1 (
 )''')
         w.close()
         os.system(f'start /b cmd /k "updatecommand1.bat"')
-    def ucp(self,event):
-        subprocess.Popen('python pca.py', creationflags=subprocess.CREATE_NO_WINDOW)
     def cpscf(self,event):
         gui = tk.Tk()
         gui.title('change PSCF')
@@ -735,10 +997,10 @@ if errorlevel 1 (
     def OnChar(self, event):
         keycode = event.GetKeyCode()
     def cts(self,event):
-        os.startfile('chatc.py')
+        subprocess.Popen('python chatc.py')
         event.Skip()
     def mas(self,event):
-        os.startfile('MAS.py')
+        subprocess.Popen('python MAS.py')
         event.Skip()
     def hovered_back(self,event):
         self.back.SetForegroundColour(LIGHT_SCHEME['text'])
@@ -818,7 +1080,7 @@ if errorlevel 1 (
         if result == wx.ID_NO:
             pass
         else:
-            os.startfile('clearc.py')
+            subprocess.Popen('python clearc.py')
             exit()
     def burn1(self,event):
         global bookmarks
@@ -850,7 +1112,7 @@ if errorlevel 1 (
             write.write("")
             write.close()
             event.Skip()
-            os.startfile('clearc.py')
+            subprocess.Popen('python clearc.py')
             exit()
     def open_theme(self,event):
         theme_tab = themepage(self.parent)
@@ -1100,14 +1362,27 @@ if errorlevel 1 (
         page = WebPage(self.parent, self.visited, url=event.URL)
         self.parent.AddPage(page, caption="Loading")
     def loadpage(self, event):
-        global validurl
+        global validurl,searchengine
         def is_valid_url(url):
             parsed_url = urllib.parse.urlparse(url)
             return bool(parsed_url.scheme and parsed_url.netloc)
         url = self.url_field.GetValue()
         if (not url.startswith("https://") and not url.startswith("http://") and lm == 'False'):
             if url.startswith("s:") or url.startswith("S:"):
-                url = "https://duckduckgo.com/" + url[2:]
+                engine = "https://duckduckgo.com/"
+                if searchengine == 1:
+                    engine = "https://duckduckgo.com/"
+                elif searchengine == 2:
+                    engine = "https://www.google.com/search?q="
+                elif searchengine == 3:
+                    engine = "https://www.bing.com/search?q="
+                elif searchengine == 4:
+                    engine = "https://search.yahoo.com/search?q="
+                elif searchengine == 5:
+                    engine = "https://www.ecosia.org/search?q="
+                elif searchengine == 6:
+                    "https://web.archive.org/"
+                url = engine + url[2:]
             else:
                 url = "http:/" + url
         if lm == 'True':
@@ -1139,6 +1414,7 @@ class Browser(wx.Frame):
             exit()
     def load_notebook(self):
         self.panel = panel = wx.Panel(self)
+        self.panel.SetFont(wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False))
         box = wx.BoxSizer(wx.HORIZONTAL)
         self.notebook = notebook = wx.aui.AuiNotebook(panel, style=wx.aui.AUI_NB_DEFAULT_STYLE)
         box.Add(notebook, proportion=True, flag=wx.EXPAND)
@@ -1166,32 +1442,9 @@ class Browser(wx.Frame):
             self.hovered_page = None
     def on_tab_hover(self, event):
         pass
-setpfn = 1
-def st():
-    write0 = open('chi2.txt', 'w')
-    write0.write("")
-    write0.close()
+def main():
     app = wx.App()
     browser = Browser(None, title='XVX Browser')
     browser.Show()
     app.MainLoop()
-def main():
-    r = open('PCC.txt', 'r')
-    check = r.read()
-    r.close()
-    if check == 'True':
-        w = open('PCC.txt', 'w')
-        w.write('False')
-        w.close()
-        st()
-    if check == 'False':
-      subprocess.Popen('python pca.py', creationflags=subprocess.CREATE_NO_WINDOW)
-      exit()
-    else:
-        tk.messagebox.showerror(title='Invalided case', message="inside the PCC.txt file the case isn't either True or False so the system would turn it into False to solve the problem!!")
-        w = open('PCC.txt', 'w')
-        w.write('False')
-        w.close()
-        subprocess.Popen('python pca.py', creationflags=subprocess.CREATE_NO_WINDOW)
-        exit()
 main()

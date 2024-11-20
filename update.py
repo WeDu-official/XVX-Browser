@@ -25,6 +25,7 @@ for i in range(10000):
     filename_new = find_between3(data,fileni,fileni2)
     if filename is not None and filename != '' and filename != "":
         try:
+            print(filename)
             fil = open(filename,'wb')
             fil.write(bytes(find_between3(data,datai,datai2),encoding='utf-8'))
             fil.close()
