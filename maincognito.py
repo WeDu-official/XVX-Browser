@@ -200,6 +200,8 @@ hardcoded2 = """ /* Replace with your desired image */
 </html>"""
 bg = [254,254,254]
 tex = [0,0,0]
+ENDN = True
+case = 0
 bn = [200, 200, 200]
 update_url = "https://drive.usercontent.google.com/u/0/uc?id=1E1TXG2nPH8R78EouumZRe4wnp2ti2sX-&export=download"
 SCHEME = {
@@ -215,7 +217,7 @@ LIGHT_SCHEME = {
 validurl = False
 bookmarks = []
 lm = 'False'
-sbmc = 'True'
+sbmc = 'False'
 CAD = False
 par = None
 asasa = None
@@ -224,6 +226,52 @@ tko = ""
 q1 = 'True'
 q2 = 'True'
 q3 = 'True'
+
+
+def imbt():
+    gui = tk.Tk()
+    gui.geometry('600x300')
+    gui.title('choose')
+    tk.Label(gui,
+             text='choose which burning option you want to use when getting out of IM mode based XVX browser').pack()
+    tk.Label(gui, text='option 1:normal Burn').pack()
+    d1 = tk.StringVar()
+    def ma():
+        global ENDN,case
+        w = open('chi.txt', 'w')
+        w.write('')
+        w.close()
+        if case == 0:
+            w = open('chi.txt', 'w')
+            w.write('A')
+            w.close()
+            gui.destroy()
+            ENDN = True
+        if case == 1:
+            w = open('chi.txt', 'w')
+            w.write('B')
+            w.close()
+            w = open('coci.txt', 'w')
+            w.write(d1.get())
+            w.close()
+            gui.destroy()
+            ENDN = False
+    def sit1():
+        global case
+        case = 0
+        ma()
+
+    def sit2():
+        global case
+        case = 1
+        ma()
+
+    tk.Button(gui, text='I want option 1', command=sit1).pack()
+    tk.Label(gui, text='option 2:PSCF Burn').pack()
+    tk.Label(gui, text='if you want option 2 write the PSCF path bellow').pack()
+    tk.Entry(gui, textvariable=d1).pack()
+    tk.Button(gui, text='I want option 2', command=sit2).pack()
+    gui.mainloop()
 class themepage(wx.Panel):
     def __init__(self,parent):
         global bg,tex,bn,CAD
@@ -397,101 +445,17 @@ class themepage(wx.Panel):
         self.send.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
     def tab_new(self, event):
-        page = WebPage(self.parent, [])
+        page = WebPage(self.parent)
         self.parent.AddPage(page, caption="Loading", select=True)
     def on_close(self):
         self.open = False
     def on_select(self):
-        self.frame.SetTitle("XVX Browser History")
-class HistoryPage(wx.Panel):
-    def __init__(self, parent, history_var):
-        wx.Panel.__init__(self, parent=parent)
-        self.open = True
-        self.parent = parent
-        self.history_var = history_var
-        self.frame = wx.GetTopLevelParent(self)
-        self.frame.SetBackgroundColour(LIGHT_SCHEME['background'])
-        pagesizer = wx.BoxSizer(wx.VERTICAL)
-        self.listbox = listbox = wx.ListBox(self)
-        top_bar_container = wx.BoxSizer(wx.HORIZONTAL)
-        label = wx.StaticText(self, label='Double-click on an item to open it.', style=wx.ST_ELLIPSIZE_END)
-        self.new = wx.Button(self, label='+', size=(30, 30), style=wx.DOUBLE_BORDER)
-        self.new.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
-        self.new.Bind(wx.EVT_ENTER_WINDOW, self.hovered_new)
-        self.new.Bind(wx.EVT_LEAVE_WINDOW, self.leave_new)
-        new_tip = wx.ToolTip('Open a new tab')
-        self.new.SetToolTip(new_tip)
-        self.delh = wx.Button(self, label='-', size=(30, 30), style=wx.DOUBLE_BORDER)
-        self.delh.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
-        self.delh.SetForegroundColour(LIGHT_SCHEME['text'])
-        self.delh.Bind(wx.EVT_ENTER_WINDOW, self.hovered_delh)
-        self.delh.Bind(wx.EVT_LEAVE_WINDOW, self.leave_delh)
-        d_tip = wx.ToolTip('delete selected item from history')
-        self.delh.SetToolTip(d_tip)
-        top_bar_container.Add(label, 1, wx.LEFT | wx.RIGHT | wx.ALIGN_CENTER_VERTICAL, 5)
-        top_bar_container.AddSpacer(30)
-        top_bar_container.Add(self.delh, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
-        top_bar_container.Add(self.new, 0, wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
-        pagesizer.Add(top_bar_container, proportion=False, flag=wx.EXPAND)
-        pagesizer.Add(listbox, proportion=True, flag=wx.EXPAND)
-        self.new.Bind(wx.EVT_BUTTON, self.tab_new)
-        self.delh.Bind(wx.EVT_BUTTON, self.deletehis)
-        self.Bind(wx.EVT_LISTBOX_DCLICK, self.open_link)
-        self.SetSizer(pagesizer)
-        self.refresh()
-    def hovered_delh(self,event):
-        self.delh.SetForegroundColour(LIGHT_SCHEME['text'])
-        event.Skip()
-    def leave_delh(self,event):
-        self.delh.SetForegroundColour(LIGHT_SCHEME['text'])
-        event.Skip()
-    def hovered_new(self,event):
-        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
-        event.Skip()
-    def leave_new(self,event):
-        self.new.SetForegroundColour(LIGHT_SCHEME['text'])
-        event.Skip()
-    def refresh(self):
-        if self.open:
-            try:
-                self.listbox.AppendItems(self.history_var[len(self.listbox.GetItems()):])
-                wx.CallLater(3000, self.refresh)
-            except:
-                pass
-    def deletehis(self, event):
-        index = event.GetSelection()
-
-        # Check if an item is selected
-        if index != wx.NOT_FOUND:
-            # Get the selected item
-            selected_item = self.listbox.GetStringSelection()
-            for i, item in enumerate(self.history_var):
-                if item == selected_item:
-                    try:
-                        self.listbox.Delete(i)
-                    except (IndexError):
-                        pass
-                    try:
-                        self.history_var.pop(i)
-                    except (IndexError):
-                        pass
-    def open_link(self, event):
-        page = WebPage(self.parent, self.history_var, url=event.GetString())
-        self.parent.AddPage(page, caption="Loading")
-    def tab_new(self, event):
-        page = WebPage(self.parent, self.history_var)
-        self.parent.AddPage(page, caption="Loading", select=True)
-    def on_close(self):
-        self.open = False
-    def on_select(self):
-        self.frame.SetTitle("XVX Browser History")
+        self.frame.SetTitle("XVX Browser: incognito mode History")
 class SourceCode(wx.Panel):
-    def __init__(self, parent, windowname, windowurl, history_var, *args, **kwargs):
+    def __init__(self, parent, windowname, windowurl, *args, **kwargs):
         wx.Panel.__init__(self, parent)
         self.name = windowname
         self.parent = parent
-        self.history_var = history_var
         self.frame = wx.GetTopLevelParent(self)
         self.frame.SetBackgroundColour(LIGHT_SCHEME['background'])
         pagesizer = wx.BoxSizer(wx.VERTICAL)
@@ -515,7 +479,7 @@ class SourceCode(wx.Panel):
     def on_select(self):
         self.frame.SetTitle(self.name)
     def tab_new(self, event):
-        page = WebPage(self.parent, self.history_var)
+        page = WebPage(self.parent)
         self.parent.AddPage(page, caption="Loading", select=True)
     def hovered_new(self,event):
         self.new.SetForegroundColour(LIGHT_SCHEME['text'])
@@ -593,7 +557,7 @@ class BookmarkPage(wx.Panel):
     def da(self,event):
         global bookmarks
         self.bookmarks = []
-        write = open('bookmarks.txt', 'w')
+        write = open('bookmarksi.txt', 'w')
         write.write("")
         write.close()
         event.Skip()
@@ -616,15 +580,15 @@ class BookmarkPage(wx.Panel):
                             self.bm.pop(d)
                     try:
                         try:
-                            write = open('bookmarks.txt', 'w')
+                            write = open('bookmarksi.txt', 'w')
                             write.write("\n".join(self.bm))
                             write.close()
                         except(OSError, PermissionError):
-                            wx.MessageBox('it might be OS or permission problem to write in bookmarks.txt',
+                            wx.MessageBox('it might be OS or permission problem to write in bookmarksi.txt',
                                           'Error with bookmarks',
                                           wx.OK | wx.ICON_ERROR)
                     except FileNotFoundError:
-                        open('bookmarks.txt', 'x')
+                        open('bookmarksi.txt', 'x')
     def refresh(self):
         if self.open:
             try:
@@ -633,25 +597,22 @@ class BookmarkPage(wx.Panel):
             except:
                 pass
     def open_link(self, event):
-        page = WebPage(self.parent, self.bookmarks, url=event.GetString())
+        page = WebPage(self.parent, url=event.GetString())
         self.parent.AddPage(page, caption="Loading")
     def tab_new(self, event):
-        page = WebPage(self.parent, self.bookmarks)
+        page = WebPage(self.parent)
         self.parent.AddPage(page, caption="Loading", select=True)
     def on_close(self):
         self.open = False
     def on_select(self):
-        self.frame.SetTitle("XVX Browser History")
+        self.frame.SetTitle("XVX Browser: incognito mode History")
 class WebPage(wx.Panel):
-    def __init__(self, parent, history_var, url=f"file:///{os.path.dirname(os.path.abspath(__file__)).replace('\\','/')}/home.html"):
+    def __init__(self, parent, url=f"file:///{os.path.dirname(os.path.abspath(__file__)).replace('\\','/')}/home_incognito.html"):
         global par,asasa
         wx.Panel.__init__(self, parent=parent)
         self.SetBackgroundColour(LIGHT_SCHEME['background'])
         self.parent = parent
         par = self.parent
-        self.visited = history_var
-        asasa = self.visited
-        self.remember_history = True
         self.frame = wx.GetTopLevelParent(self)
         self.frame.SetBackgroundColour(LIGHT_SCHEME['background'])
         self.pagesizer = pagesizer = wx.BoxSizer(wx.VERTICAL)
@@ -797,37 +758,28 @@ class WebPage(wx.Panel):
         self.sm_menu.AppendSeparator()
         self.sm_menu.Append(self.menu_sm4)
         self.optional_menu = wx.Menu()
-        self.menu_dbookmarks = menu_dbookmarks = wx.MenuItem(self.optional_menu, 0, "Store bookmarks: " + sbmc)
-        self.menu_lm = menu_lm = wx.MenuItem(self.optional_menu, 1, "Literal mode: " + lm)
-        self.menu_dish = menu_dish = wx.MenuItem(self.optional_menu, 2, "Disable history: " + hisd)
-        self.optional_menu.Append(self.menu_dbookmarks)
+        self.menu_lm = menu_lm = wx.MenuItem(self.optional_menu, 0, "Literal mode: " + lm)
         self.optional_menu.AppendSeparator()
         self.optional_menu.Append(self.menu_lm)
-        self.optional_menu.Append(self.menu_dish)
         self.page_menu = wx.Menu()
-        menu_zoom = wx.MenuItem(settings_menu, 15, "Change zoom")
-        self.menu_contextmenu = menu_contextmenu = wx.MenuItem(settings_menu, 16, "Enable context menu: " + q2)
-        self.menu_historyenabled = menu_historyenabled = wx.MenuItem(settings_menu, 17, "Page forever lock")
+        menu_zoom = wx.MenuItem(settings_menu, 10, "Change zoom")
+        self.menu_contextmenu = menu_contextmenu = wx.MenuItem(settings_menu, 11, "Enable context menu: " + q2)
+        self.menu_historyenabled = menu_historyenabled = wx.MenuItem(settings_menu, 12, "Page forever lock")
         menu_source = wx.MenuItem(self.page_menu, 0, "Show source")
-        menu_history = wx.MenuItem(self.page_menu, 1, "Show history")
-        menu_print = wx.MenuItem(self.page_menu, 2, "Print this page")
-        menu_find = wx.MenuItem(self.page_menu, 3, "Find in page")
-        menu_dhistory = wx.MenuItem(self.page_menu, 4, "Delete history")
-        menu_downloads = wx.MenuItem(self.page_menu, 5, "Show downloads folder")
-        menu_bookmarks = wx.MenuItem(self.page_menu, 6, "Show bookmarks page")
-        menu_addbookmarks = wx.MenuItem(self.page_menu, 7, "Add this website to bookmarks")
-        menu_theme = wx.MenuItem(self.page_menu, 8, "Change Theme")
-        menu_dth = wx.MenuItem(self.page_menu, 9, "Turn to default theme")
-        menu_burn = wx.MenuItem(self.page_menu, 10, "Burn !")
-        menu_burn2 = wx.MenuItem(self.page_menu, 11, "Burn PSCF !")
-        menu_cl1 = wx.MenuItem(self.page_menu, 12, "Clear !")
-        menu_cl2 = wx.MenuItem(self.page_menu, 13, "Clear PSCF !")
-        menu_pscf = wx.MenuItem(self.page_menu, 14, "change PSCF")
+        menu_print = wx.MenuItem(self.page_menu, 1, "Print this page")
+        menu_find = wx.MenuItem(self.page_menu, 2, "Find in page")
+        menu_downloads = wx.MenuItem(self.page_menu, 3, "Show downloads folder")
+        menu_bookmarks = wx.MenuItem(self.page_menu, 4, "Show bookmarks page")
+        menu_addbookmarks = wx.MenuItem(self.page_menu, 5, "Add this website to bookmarks")
+        menu_theme = wx.MenuItem(self.page_menu, 6, "Change Theme")
+        menu_dth = wx.MenuItem(self.page_menu, 7, "Turn to default theme")
+        menu_pscf = wx.MenuItem(self.page_menu, 8, "change PSCF")
+        menu_imbt = wx.MenuItem(self.page_menu, 9, "change IMBT")
         settings_menu.Append(menu_zoom)
         settings_menu.AppendSeparator()
         try:
             self.html_window.EnableAccessToDevTools()
-            self.menu_devtools = menu_devtools = wx.MenuItem(settings_menu, 18, "Enable access to dev tools: " + q1)
+            self.menu_devtools = menu_devtools = wx.MenuItem(settings_menu, 13, "Enable access to dev tools: " + q1)
             settings_menu.Append(menu_devtools)
             settings_menu.Bind(wx.EVT_MENU, self.enable_devtools, menu_devtools)
         except:
@@ -841,22 +793,14 @@ class WebPage(wx.Panel):
         self.page_menu.Append(menu_theme)
         self.page_menu.Append(menu_dth)
         self.page_menu.AppendSeparator()
-        self.page_menu.Append(menu_history)
-        self.page_menu.Append(menu_dhistory)
-        self.page_menu.AppendSeparator()
         self.page_menu.Append(menu_print)
         self.page_menu.Append(menu_find)
         self.page_menu.AppendSeparator()
         self.page_menu.Append(menu_bookmarks)
         self.page_menu.Append(menu_addbookmarks)
         self.page_menu.AppendSeparator()
-        self.page_menu.Append(menu_burn)
-        self.page_menu.Append(menu_burn2)
-        self.page_menu.AppendSeparator()
-        self.page_menu.Append(menu_cl1)
-        self.page_menu.Append(menu_cl2)
-        self.page_menu.AppendSeparator()
         self.page_menu.Append(menu_pscf)
+        self.page_menu.Append(menu_imbt)
         self.page_menu.AppendSeparator()
         self.page_menu.AppendSubMenu(settings_menu, 'Page Settings')
         self.sm_menu.Bind(wx.EVT_MENU, self.mas, menu_sm1)
@@ -865,24 +809,17 @@ class WebPage(wx.Panel):
         self.sm_menu.Bind(wx.EVT_MENU, self.upd, menu_sm4)
         self.sm_menu.Bind(wx.EVT_MENU, self.changebackground, menu_sm5)
         self.sm_menu.Bind(wx.EVT_MENU, self.changesearchengine, menu_sm6)
-        self.optional_menu.Bind(wx.EVT_MENU, self.csbmc, menu_dbookmarks)
         self.optional_menu.Bind(wx.EVT_MENU, self.clms, menu_lm)
-        self.optional_menu.Bind(wx.EVT_MENU, self.eadh, menu_dish)
         settings_menu.Bind(wx.EVT_MENU, self.enable_contextmenu, menu_contextmenu)
         settings_menu.Bind(wx.EVT_MENU, self.enable_historyenabled, menu_historyenabled)
         settings_menu.Bind(wx.EVT_MENU, self.adjust_zoom, menu_zoom)
         self.page_menu.Bind(wx.EVT_MENU, self.show_source, menu_source)
-        self.page_menu.Bind(wx.EVT_MENU, self.show_history, menu_history)
         self.page_menu.Bind(wx.EVT_MENU, self.print_page, menu_print)
         self.page_menu.Bind(wx.EVT_MENU, self.find_in_page, menu_find)
         self.page_menu.Bind(wx.EVT_MENU, self.open_theme, menu_theme)
         self.page_menu.Bind(wx.EVT_MENU, self.turnbacktodth, menu_dth)
-        self.page_menu.Bind(wx.EVT_MENU, self.burn1, menu_burn)
-        self.page_menu.Bind(wx.EVT_MENU, self.burn2, menu_burn2)
-        self.page_menu.Bind(wx.EVT_MENU, self.clear1, menu_cl1)
-        self.page_menu.Bind(wx.EVT_MENU, self.clear2, menu_cl2)
-        self.page_menu.Bind(wx.EVT_MENU, self.dhistory, menu_dhistory)
         self.page_menu.Bind(wx.EVT_MENU, self.cpscf, menu_pscf)
+        self.page_menu.Bind(wx.EVT_MENU, self.imbst, menu_imbt)
         self.page_menu.Bind(wx.EVT_MENU, self.downloadsfolder, menu_downloads)
         self.page_menu.Bind(wx.EVT_MENU, self.bookmark_minitab, menu_bookmarks)
         self.page_menu.Bind(wx.EVT_MENU, self.bookmarksadd, menu_addbookmarks)
@@ -891,6 +828,8 @@ class WebPage(wx.Panel):
         self.SM.Bind(wx.EVT_BUTTON, self.sshowf3)
         self.k = 0
         self.SetSizer(pagesizer)
+    def imbst(self,event):
+        imbt()
     def changesearchengine(self,event):
         root = tk.Tk()
         root.title('CSE')
@@ -912,7 +851,7 @@ class WebPage(wx.Panel):
                 out = open(file_name, 'w')
                 out.writelines(lines)
                 out.close()
-            replace_line('home.html',132,f'                let searchEngine = {searchengine};\n')
+            replace_line('home_incognito.html',132,f'                let searchEngine = {searchengine};\n')
         tk.Button(root, text='set',width=9,height=2,bg='lightblue',command=sett).pack()
         root.mainloop()
     def changebackground(self, event):
@@ -938,25 +877,25 @@ class WebPage(wx.Panel):
                 title='Select a file...',
                 filetypes=filetypes,
             )
-            d = open('bgt.txt','w')
+            d = open('bgti.txt','w')
             d.write(filename)
             d.close()
             T.delete("1.0", "end")
             T.insert("1.0", filename)
         def rsett():
-            c = hardcoded + f"""("background.jpg");""" + hardcoded2
-            w = open('home.html', 'w')
+            c = hardcoded + f"""("background2.jpg");""" + hardcoded2
+            w = open('home_incognito.html', 'w')
             w.write(c)
             w.close()
         def sett():
-            d = open('bgt.txt', 'r')
+            d = open('bgti.txt', 'r')
             da = d.read()
             d.close()
             c = hardcoded + f"""("{da}");""" + hardcoded2
-            w = open('home.html', 'w')
+            w = open('home_incognito.html', 'w')
             w.write(c)
             w.close()
-            d2 = open('bgt.txt', 'w')
+            d2 = open('bgti.txt', 'w')
             d2.write('')
             d2.close()
         tk.Button(gui, text='📂', command=dialog, bg='light blue', font=my_font, width=7, height=2).place(x=10,y=175)
@@ -965,7 +904,7 @@ class WebPage(wx.Panel):
         gui.mainloop()
     def upd(self, event):
         global update_url
-        page = WebPage(self.parent, self.visited, url=update_url)
+        page = WebPage(self.parent, url=update_url)
         page.SetBackgroundColour(LIGHT_SCHEME['background'])
         self.parent.AddPage(page, caption="Loading", select=True)
         current_user = os.path.basename(os.environ['USERPROFILE'])
@@ -1050,79 +989,15 @@ if errorlevel 1 (
     def leave_sm(self,event):
         self.SM.SetForegroundColour(LIGHT_SCHEME['text'])
         event.Skip()
-    def eadh(self,event):
-        global hisd
-        if hisd == 'True':
-            hisd = 'False'
-        else:
-            hisd = 'True'
-        self.menu_dish.SetItemLabel("Disable history: " + hisd)
-        event.Skip()
-    def csbmc(self,event):
-        global sbmc
-        if sbmc == 'True':
-            sbmc = 'False'
-        else:
-            sbmc = 'True'
-        self.menu_dbookmarks.SetItemLabel("Store bookmarks: " + sbmc)
-        event.Skip()
     def sshowf(self,event):
         self.PopupMenu(self.page_menu)
     def sshowf2(self,event):
         self.PopupMenu(self.optional_menu)
     def sshowf3(self,event):
         self.PopupMenu(self.sm_menu)
-    def clear1(self,event):
-        dlg1 = wx.MessageDialog(self,'to clear data, the browser would restart itself.', 'confirmation', wx.YES_NO | wx.ICON_WARNING)
-        result = dlg1.ShowModal()
-        if result == wx.ID_NO:
-            pass
-        else:
-            os.startfile('clearcommand.bat')
-            exit()
-    def clear2(self,event):
-        dlg1 = wx.MessageDialog(self,'to clear data(PSCF), the browser would restart itself.', 'confirmation',wx.YES_NO | wx.ICON_WARNING)
-        result = dlg1.ShowModal()
-        if result == wx.ID_NO:
-            pass
-        else:
-            subprocess.Popen('python clearc.py')
-            exit()
-    def burn1(self,event):
-        global bookmarks
-        dlg1 = wx.MessageDialog(self,'to start burning, the browser would restart itself.', 'confirmation',wx.YES_NO | wx.ICON_WARNING)
-        result = dlg1.ShowModal()
-        if result == wx.ID_NO:
-            pass
-        else:
-            self.visited.clear()
-            bookmarks = []
-            self.bookmarks = []
-            write = open('bookmarks.txt', 'w')
-            write.write("")
-            write.close()
-            event.Skip()
-            os.startfile('clearcommand.bat')
-            exit()
-    def burn2(self,event):
-        global bookmarks
-        dlg1 = wx.MessageDialog(self,'to start burning(PSCF) , the browser would restart itself.', 'confirmation',wx.YES_NO | wx.ICON_WARNING)
-        result = dlg1.ShowModal()
-        if result == wx.ID_NO:
-            pass
-        else:
-            self.visited.clear()
-            bookmarks = []
-            self.bookmarks = []
-            write = open('bookmarks.txt', 'w')
-            write.write("")
-            write.close()
-            event.Skip()
-            subprocess.Popen('python clearc.py')
-            exit()
     def open_theme(self,event):
         theme_tab = themepage(self.parent)
-        self.parent.AddPage(theme_tab, caption="XVX Browser theme", select=False)
+        self.parent.AddPage(theme_tab, caption="XVX Browser: incognito mode theme", select=False)
     def turnbacktodth(self,event):
         global LIGHT_SCHEME,bg,tex,bn
         LIGHT_SCHEME = {
@@ -1137,38 +1012,38 @@ if errorlevel 1 (
         if sbmc == 'True':
             try:
                 try:
-                    f = open('bookmarks.txt', 'r')
+                    f = open('bookmarksi.txt', 'r')
                     if self.html_window.GetCurrentURL() in f.read():
                         f.close()
                     else:
                         f.close()
-                        write = open('bookmarks.txt','a')
+                        write = open('bookmarksi.txt','a')
                         write.write(f'{self.html_window.GetCurrentURL()}\n')
                         write.close()
                 except(OSError, PermissionError):
-                    wx.MessageBox('it might be OS or permission problem to write in bookmarks.txt', 'Error with bookmarks',
+                    wx.MessageBox('it might be OS or permission problem to write in bookmarksi.txt', 'Error with bookmarks',
                                   wx.OK | wx.ICON_ERROR)
             except FileNotFoundError:
-                open('bookmarks.txt','x')
+                open('bookmarksi.txt','x')
         else:
             bookmarks.append(self.html_window.GetCurrentURL())
     def bookmark_minitab(self,event):
         try:
             try:
                 try:
-                    with open('bookmarks.txt', 'r') as file:
+                    with open('bookmarksi.txt', 'r') as file:
                         line = file.readlines()
                     line = [lin.strip() for lin in line]
                     lines = list(set(line) | set(bookmarks))
                     bookmark_tab = BookmarkPage(self.parent, lines, line)
                     self.parent.AddPage(bookmark_tab, caption="XVX Bookmarks page", select=False)
                 except(OSError,PermissionError):
-                    wx.MessageBox('it might be OS or permission problem to read bookmarks.txt', 'Error with bookmarks',
+                    wx.MessageBox('it might be OS or permission problem to read bookmarksi.txt', 'Error with bookmarks',
                                   wx.OK | wx.ICON_ERROR)
             except(UnicodeError,UnicodeDecodeError,UnicodeEncodeError):
-                wx.MessageBox('the bookmarks.txt might has non ASCII litters', 'Error with bookmarks', wx.OK | wx.ICON_ERROR)
+                wx.MessageBox('the bookmarksi.txt might has non ASCII litters', 'Error with bookmarks', wx.OK | wx.ICON_ERROR)
         except FileNotFoundError:
-            open('bookmarks.txt','x')
+            open('bookmarksi.txt','x')
     def downloadsfolder(self,event):
         current_user = os.path.basename(os.environ['USERPROFILE'])
         subprocess.Popen(f'explorer "C:\\Users\\{current_user}\\Downloads"')
@@ -1180,19 +1055,12 @@ if errorlevel 1 (
     def show_source(self, event):
         title = self.html_window.GetCurrentTitle()
         if title == "":
-            title = ("XVX Browser - Source for " + self.html_window.GetCurrentURL())
+            title = ("XVX Browser: incognito mode - Source for " + self.html_window.GetCurrentURL())
         else:
-            title = ("XVX Browser - Source for " + self.html_window.GetCurrentTitle())
-        page = SourceCode(self.parent, windowname=title, windowurl=self.html_window.GetCurrentURL(),
-                          history_var=self.visited, style=wx.TE_MULTILINE | wx.TE_READONLY | wx.HSCROLL)
+            title = ("XVX Browser: incognito mode - Source for " + self.html_window.GetCurrentTitle())
+        page = SourceCode(self.parent, windowname=title, windowurl=self.html_window.GetCurrentURL(), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.HSCROLL)
         page.source.SetValue(self.html_window.GetPageSource())
         self.parent.AddPage(page, caption=title, select=False)
-    def show_history(self, event):
-        history_tab = HistoryPage(self.parent, self.visited)
-        self.parent.AddPage(history_tab, caption="XVX Browser History", select=False)
-    def dhistory(self,event):
-        self.visited.clear()
-        event.Skip()
     def adjust_zoom(self, event):
         self.pagesizer.Hide(self.find_container)
         self.pagesizer.Show(self.zoom_container)
@@ -1328,7 +1196,7 @@ if errorlevel 1 (
             self.load_url()
             self.html_window.Reload()
     def tab_new(self, event):
-        page = WebPage(self.parent, self.visited)
+        page = WebPage(self.parent)
         page.SetBackgroundColour(LIGHT_SCHEME['background'])
         self.parent.AddPage(page, caption="Loading", select=True)
     def post_load_config(self, event=None):
@@ -1343,9 +1211,6 @@ if errorlevel 1 (
             self.forward.Enable()
         self.reload.SetLabel("⟳")
         self.url_field.Enable()
-        if self.remember_history:
-            if hisd == 'False':
-                self.visited.append(url)
     def change_title(self, event):
         title = self.html_window.GetCurrentTitle()
         current_page_index = self.parent.GetPageIndex(self)
@@ -1360,15 +1225,15 @@ if errorlevel 1 (
         divider = ""
         if title != "":
             divider = " - "
-        self.frame.SetTitle("XVX Browser")
+        self.frame.SetTitle("XVX Browser: incognito mode")
     def on_close(self):
         if self.html_window.IsBusy():
             self.html_window.Stop()
     def open_in_new_tab(self, event):
-        page = WebPage(self.parent, self.visited, url=event.URL)
+        page = WebPage(self.parent, url=event.URL)
         self.parent.AddPage(page, caption="Loading")
     def loadpage(self, event):
-        global validurl,searchengine
+        global validurl
         def is_valid_url(url):
             parsed_url = urllib.parse.urlparse(url)
             return bool(parsed_url.scheme and parsed_url.netloc)
@@ -1408,14 +1273,39 @@ class Browser(wx.Frame):
         self.Bind(wx.EVT_CLOSE, self.OnClose)
         self.history_closed = []
         self.load_notebook()
+    def burn1(self):
+        global bookmarks
+        bookmarks = []
+        self.bookmarks = []
+        write = open('bookmarksi.txt', 'w')
+        write.write("")
+        write.close()
+        os.startfile('clearcommandi.bat')
+        exit()
+    def burn2(self):
+        global bookmarks
+        bookmarks = []
+        self.bookmarks = []
+        write = open('bookmarksi.txt', 'w')
+        write.write("")
+        write.close()
+        subprocess.Popen('python clearci.py')
+        exit()
     def OnClose(self, event):
+        global ENDN
         dlg = wx.MessageDialog(self, "Are you sure you want to close?", "Confirmation",
                                wx.YES_NO | wx.ICON_QUESTION)
         result = dlg.ShowModal()
         if result == wx.ID_NO:
             event.Veto()
         else:
-            exit()
+            if ENDN is True:
+                self.burn1()
+            if ENDN is False:
+                self.burn2()
+            else:
+                wx.MessageDialog(self, "Browser couldn't know if it should at the end of IM section to either Burn or Burn PSCF", "ERROR")
+                exit()
     def load_notebook(self):
         self.panel = panel = wx.Panel(self)
         self.panel.SetFont(wx.Font(10, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False))
@@ -1423,7 +1313,7 @@ class Browser(wx.Frame):
         self.notebook = notebook = wx.aui.AuiNotebook(panel, style=wx.aui.AUI_NB_DEFAULT_STYLE)
         box.Add(notebook, proportion=True, flag=wx.EXPAND)
         panel.SetSizer(box)
-        notebook.AddPage(WebPage(self.notebook, self.history_closed), caption="Loading", select=True)
+        notebook.AddPage(WebPage(self.notebook), caption="Loading", select=True)
         notebook.Bind(wx.aui.EVT_AUINOTEBOOK_PAGE_CLOSE, self.on_page_close)
         notebook.Bind(wx.aui.EVT_AUINOTEBOOK_PAGE_CHANGED, self.on_page_select)
         notebook.Bind(wx.EVT_MOTION, self.on_tab_hover)
@@ -1448,11 +1338,21 @@ class Browser(wx.Frame):
         pass
 setpfn = 1
 def st():
+    global ENDN
+    r = open('chi.txt', 'r')
+    check = r.read()
+    r.close()
+    if check == '':
+        imbt()
+    if check == 'A':
+        ENDN = True
+    if check == 'B':
+        ENDN = False
     write0 = open('chi2.txt', 'w')
     write0.write("")
     write0.close()
     app = wx.App()
-    browser = Browser(None, title='XVX Browser')
+    browser = Browser(None, title='XVX Browser: incognito mode')
     browser.Show()
     app.MainLoop()
 def main():

@@ -1,4 +1,4 @@
-import subprocess
+import os
 import tkinter as tk
 gu = tk.Tk()
 gu.title('MAS')
@@ -18,7 +18,7 @@ setup_textbox.pack()
 def ch():
     with open('port.txt','w') as x:
         x.write(setup_textbox.get())
-    subprocess.Popen('python chats.py')
+    os.system('start cmd /k "python chats.py"')
 setup_button = tk.Button(gu, text="make", font=BUTTON_FONT, bg=OCEAN_BLUE, fg=WHITE, command=ch)
 setup_button.pack()
 gu.mainloop()

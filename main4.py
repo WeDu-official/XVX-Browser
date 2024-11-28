@@ -402,7 +402,7 @@ class themepage(wx.Panel):
     def on_close(self):
         self.open = False
     def on_select(self):
-        self.frame.SetTitle("XVX Browser History")
+        self.frame.SetTitle("XVX Browser: Forth user History")
 class HistoryPage(wx.Panel):
     def __init__(self, parent, history_var):
         wx.Panel.__init__(self, parent=parent)
@@ -485,7 +485,7 @@ class HistoryPage(wx.Panel):
     def on_close(self):
         self.open = False
     def on_select(self):
-        self.frame.SetTitle("XVX Browser History")
+        self.frame.SetTitle("XVX Browser: Forth user History")
 class SourceCode(wx.Panel):
     def __init__(self, parent, windowname, windowurl, history_var, *args, **kwargs):
         wx.Panel.__init__(self, parent)
@@ -593,7 +593,7 @@ class BookmarkPage(wx.Panel):
     def da(self,event):
         global bookmarks
         self.bookmarks = []
-        write = open('bookmarks.txt', 'w')
+        write = open('bookmarks4.txt', 'w')
         write.write("")
         write.close()
         event.Skip()
@@ -616,15 +616,15 @@ class BookmarkPage(wx.Panel):
                             self.bm.pop(d)
                     try:
                         try:
-                            write = open('bookmarks.txt', 'w')
+                            write = open('bookmarks4.txt', 'w')
                             write.write("\n".join(self.bm))
                             write.close()
                         except(OSError, PermissionError):
-                            wx.MessageBox('it might be OS or permission problem to write in bookmarks.txt',
+                            wx.MessageBox('it might be OS or permission problem to write in bookmarks4.txt',
                                           'Error with bookmarks',
                                           wx.OK | wx.ICON_ERROR)
                     except FileNotFoundError:
-                        open('bookmarks.txt', 'x')
+                        open('bookmarks4.txt', 'x')
     def refresh(self):
         if self.open:
             try:
@@ -641,7 +641,7 @@ class BookmarkPage(wx.Panel):
     def on_close(self):
         self.open = False
     def on_select(self):
-        self.frame.SetTitle("XVX Browser History")
+        self.frame.SetTitle("XVX Browser: Forth user History")
 class WebPage(wx.Panel):
     def __init__(self, parent, history_var, url=f"file:///{os.path.dirname(os.path.abspath(__file__)).replace('\\','/')}/home.html"):
         global par,asasa
@@ -902,6 +902,7 @@ class WebPage(wx.Panel):
         tk.Radiobutton(root, text="bing", variable=radiobutton_variable, value=3).pack()
         tk.Radiobutton(root, text="yahoo", variable=radiobutton_variable, value=4).pack()
         tk.Radiobutton(root, text="ecosia", variable=radiobutton_variable, value=5).pack()
+
         def sett():
             global searchengine
             searchengine = radiobutton_variable.get()
@@ -995,7 +996,7 @@ if errorlevel 1 (
         T.pack()
         my_font = Font(family="Helvetica", size=12, weight="bold", slant="italic")
         def sett():
-            of = open('coc.txt','w')
+            of = open('coc4.txt','w')
             of.write(T.get("1.0",tk.END))
             of.close()
         tk.Button(gui, text='set', command=sett, bg='light blue', font=my_font, width=10, height=2).pack()
@@ -1078,7 +1079,7 @@ if errorlevel 1 (
         if result == wx.ID_NO:
             pass
         else:
-            os.startfile('clearcommand.bat')
+            os.startfile('clearcommand4.bat')
             exit()
     def clear2(self,event):
         dlg1 = wx.MessageDialog(self,'to clear data(PSCF), the browser would restart itself.', 'confirmation',wx.YES_NO | wx.ICON_WARNING)
@@ -1086,7 +1087,7 @@ if errorlevel 1 (
         if result == wx.ID_NO:
             pass
         else:
-            subprocess.Popen('python clearc.py')
+            subprocess.Popen('python clearc4.py')
             exit()
     def burn1(self,event):
         global bookmarks
@@ -1098,11 +1099,11 @@ if errorlevel 1 (
             self.visited.clear()
             bookmarks = []
             self.bookmarks = []
-            write = open('bookmarks.txt', 'w')
+            write = open('bookmarks4.txt', 'w')
             write.write("")
             write.close()
             event.Skip()
-            os.startfile('clearcommand.bat')
+            os.startfile('clearcommand4.bat')
             exit()
     def burn2(self,event):
         global bookmarks
@@ -1114,15 +1115,15 @@ if errorlevel 1 (
             self.visited.clear()
             bookmarks = []
             self.bookmarks = []
-            write = open('bookmarks.txt', 'w')
+            write = open('bookmarks4.txt', 'w')
             write.write("")
             write.close()
             event.Skip()
-            subprocess.Popen('python clearc.py')
+            subprocess.Popen('python clearc4.py')
             exit()
     def open_theme(self,event):
         theme_tab = themepage(self.parent)
-        self.parent.AddPage(theme_tab, caption="XVX Browser theme", select=False)
+        self.parent.AddPage(theme_tab, caption="XVX Browser: Forth user theme", select=False)
     def turnbacktodth(self,event):
         global LIGHT_SCHEME,bg,tex,bn
         LIGHT_SCHEME = {
@@ -1137,38 +1138,38 @@ if errorlevel 1 (
         if sbmc == 'True':
             try:
                 try:
-                    f = open('bookmarks.txt', 'r')
+                    f = open('bookmarks4.txt', 'r')
                     if self.html_window.GetCurrentURL() in f.read():
                         f.close()
                     else:
                         f.close()
-                        write = open('bookmarks.txt','a')
+                        write = open('bookmarks4.txt','a')
                         write.write(f'{self.html_window.GetCurrentURL()}\n')
                         write.close()
                 except(OSError, PermissionError):
-                    wx.MessageBox('it might be OS or permission problem to write in bookmarks.txt', 'Error with bookmarks',
+                    wx.MessageBox('it might be OS or permission problem to write in bookmarks4.txt', 'Error with bookmarks',
                                   wx.OK | wx.ICON_ERROR)
             except FileNotFoundError:
-                open('bookmarks.txt','x')
+                open('bookmarks4.txt','x')
         else:
             bookmarks.append(self.html_window.GetCurrentURL())
     def bookmark_minitab(self,event):
         try:
             try:
                 try:
-                    with open('bookmarks.txt', 'r') as file:
+                    with open('bookmarks4.txt', 'r') as file:
                         line = file.readlines()
                     line = [lin.strip() for lin in line]
                     lines = list(set(line) | set(bookmarks))
                     bookmark_tab = BookmarkPage(self.parent, lines, line)
                     self.parent.AddPage(bookmark_tab, caption="XVX Bookmarks page", select=False)
                 except(OSError,PermissionError):
-                    wx.MessageBox('it might be OS or permission problem to read bookmarks.txt', 'Error with bookmarks',
+                    wx.MessageBox('it might be OS or permission problem to read bookmarks4.txt', 'Error with bookmarks',
                                   wx.OK | wx.ICON_ERROR)
             except(UnicodeError,UnicodeDecodeError,UnicodeEncodeError):
-                wx.MessageBox('the bookmarks.txt might has non ASCII litters', 'Error with bookmarks', wx.OK | wx.ICON_ERROR)
+                wx.MessageBox('the bookmarks4.txt might has non ASCII litters', 'Error with bookmarks', wx.OK | wx.ICON_ERROR)
         except FileNotFoundError:
-            open('bookmarks.txt','x')
+            open('bookmarks4.txt','x')
     def downloadsfolder(self,event):
         current_user = os.path.basename(os.environ['USERPROFILE'])
         subprocess.Popen(f'explorer "C:\\Users\\{current_user}\\Downloads"')
@@ -1180,16 +1181,16 @@ if errorlevel 1 (
     def show_source(self, event):
         title = self.html_window.GetCurrentTitle()
         if title == "":
-            title = ("XVX Browser - Source for " + self.html_window.GetCurrentURL())
+            title = ("XVX Browser: Forth user - Source for " + self.html_window.GetCurrentURL())
         else:
-            title = ("XVX Browser - Source for " + self.html_window.GetCurrentTitle())
+            title = ("XVX Browser: Forth user - Source for " + self.html_window.GetCurrentTitle())
         page = SourceCode(self.parent, windowname=title, windowurl=self.html_window.GetCurrentURL(),
                           history_var=self.visited, style=wx.TE_MULTILINE | wx.TE_READONLY | wx.HSCROLL)
         page.source.SetValue(self.html_window.GetPageSource())
         self.parent.AddPage(page, caption=title, select=False)
     def show_history(self, event):
         history_tab = HistoryPage(self.parent, self.visited)
-        self.parent.AddPage(history_tab, caption="XVX Browser History", select=False)
+        self.parent.AddPage(history_tab, caption="XVX Browser: Forth user History", select=False)
     def dhistory(self,event):
         self.visited.clear()
         event.Skip()
@@ -1360,7 +1361,7 @@ if errorlevel 1 (
         divider = ""
         if title != "":
             divider = " - "
-        self.frame.SetTitle("XVX Browser")
+        self.frame.SetTitle("XVX Browser: Forth user")
     def on_close(self):
         if self.html_window.IsBusy():
             self.html_window.Stop()
@@ -1452,7 +1453,7 @@ def st():
     write0.write("")
     write0.close()
     app = wx.App()
-    browser = Browser(None, title='XVX Browser')
+    browser = Browser(None, title='XVX Browser: Forth user')
     browser.Show()
     app.MainLoop()
 def main():

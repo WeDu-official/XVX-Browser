@@ -1,9 +1,12 @@
 import os
 import subprocess
-folder_to_remove:str = f"C:\\Users\\{os.path.basename(os.environ['USERPROFILE'])}\\AppData\\Local\\main"
+x = open('coc4.txt','r')
+folder_to_remove:str = x.read().strip('\n')
+x.close()
 def remove_folder_recursively(folder_path):
     if not os.path.isdir(folder_path):
-        exit()
+        print(f"Error: '{folder_path}' is not a directory.")
+        return
     for root, dirs, files in os.walk(folder_path):
         print(f"Folder: {root}")
         for dir in dirs:
@@ -25,4 +28,4 @@ o = open('chi2.txt','r')
 d = o.read()
 o.close()
 if d == '':
-    subprocess.Popen('python main.py')
+    subprocess.Popen('python main4.py')

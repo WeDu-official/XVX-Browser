@@ -9,6 +9,22 @@ that tracks people or anything like that.
 
 ----------------
 
+-THE 1.7 UPDATE (AKA 'gospel of balnoma'):
+
+it's the same as 1.6 update but all the removed features came back
+
+plus we fixed many bugs
+
+SOON THE UPDATE FEATURE WOULD GET A REAL SUPPORT SO THE NEXT UPDATES(AFTER 1.7)
+
+WOULD BE FOR THE UPDATING SYSTEM AND YOU CAN GET THEM USING THE CURRENT UPDATE
+
+FEATURE(WHICH ISN'T THAT COMPLETE) BUT IT WOULD BE USED TO UPDATE ITSELF UNTIL
+
+IT WOULD REACH A HIGH STATE OF DEVELOPMENT THAT THE BROWSER CAN DEPEND ON IT FOR
+
+UPDATING THE WHOLE THING.
+
 -THE 1.6 UPDATE (WEIRDO):
 
 WE DELETED BOTH 'Profiles','documentation' & 'Incognito mode(IM)'

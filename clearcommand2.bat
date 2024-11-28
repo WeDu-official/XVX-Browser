@@ -1,0 +1,1 @@
+powershell -Command "Start-Process cmd -Verb RunAs -ArgumentList '/k cd /d %~dp0 & start /b python clear2.py & exit'"

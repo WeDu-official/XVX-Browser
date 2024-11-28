@@ -1,5 +1,5 @@
-import subprocess
 import os
+import subprocess
 x = open('coc.txt','r')
 folder_to_remove:str = x.read().strip('\n')
 x.close()
@@ -24,4 +24,8 @@ def remove_folder_recursively(folder_path):
                 pass
     print(f"Folder '{folder_path}' and its contents have been removed.")
 remove_folder_recursively(folder_to_remove)
-subprocess.Popen('python main.py',creationflags=subprocess.CREATE_NO_WINDOW)
+o = open('chi2.txt','r')
+d = o.read()
+o.close()
+if d == '':
+    subprocess.Popen('python main.py')

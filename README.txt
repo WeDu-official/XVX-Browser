@@ -4,6 +4,17 @@ it's a very basic and minimal Browser that its creators don't track you
 because we don't track anyone, the source code is open, and we didn't hide anything
 that tracks people or anything like that.
 
+-THE 1.7 UPDATE (AKA 'gospel of balnoma'):
+
+it's the same as 1.6 update but all the removed features came back
+plus we fixed many bugs
+
+SOON THE UPDATE FEATURE WOULD GET A REAL SUPPORT SO THE NEXT UPDATES(AFTER 1.7)
+WOULD BE FOR THE UPDATING SYSTEM AND YOU CAN GET THEM USING THE CURRENT UPDATE
+FEATURE(WHICH ISN'T THAT COMPLETE) BUT IT WOULD BE USED TO UPDATE ITSELF UNTIL
+IT WOULD REACH A HIGH STATE OF DEVELOPMENT THAT THE BROWSER CAN DEPEND ON IT FOR
+UPDATING THE WHOLE THING.
+
 -THE 1.6 UPDATE (WEIRDO):
 
 WE DELETED BOTH 'profiles' & 'Incognito mode(IM)'
@@ -52,7 +63,7 @@ so with this update (the 1.5 update) we got:
 4-new home page
 5-new background
 6-update to the cleaning system
-7-OH I nearly forgot but we fixed the current user name issue that in some computers the current user name is not the same as the current user path which caused some problems but we fixed it with this update
+7-OH I nearly forgot but we fixed the current username issue that in some computers the current user name is not the same as the current user path which caused some problems but we fixed it with this update
 
 -THE NEW 1.4-AA(ALL DONE 'addon') UPDATE FEATURES-
 
