@@ -6,7 +6,8 @@ that tracks people or anything like that.
 
 -THE 1.7 UPDATE (AKA 'gospel of balnoma'):
 
-it's the same as 1.6 update but all the removed features came back
+it's the same as 1.6 update but all the removed features came back(expect the documentation(it might not come back for long time)
+
 plus we fixed many bugs
 
 SOON THE UPDATE FEATURE WOULD GET A REAL SUPPORT SO THE NEXT UPDATES(AFTER 1.7)
