@@ -6,6 +6,7 @@ it's a very basic and minimal Browser that its creators don't track you
 because we don't track anyone, the source code is open, and we didn't hide anything
 
 that tracks people or anything like that.
+
 ----------------
 
 -THE 1.7A1(first addon) UPDATE:
