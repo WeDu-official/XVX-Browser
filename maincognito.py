@@ -592,7 +592,7 @@ class BookmarkPage(wx.Panel):
     def refresh(self):
         if self.open:
             try:
-                self.listbox.AppendItems(self.bookmarks[len(self.listbox.GetItems()):])
+                self.listbox.AppendItems(self.bookmarks[len(self.listbox.GetItems()):][::-1])
                 wx.CallLater(3000, self.refresh)
             except:
                 pass
