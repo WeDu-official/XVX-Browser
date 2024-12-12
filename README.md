@@ -9,6 +9,27 @@ that tracks people or anything like that.
 
 ----------------
 
+-THE new W1.0(WeDu software base environment):
+
+this update is very, very important for YOU
+as a user because if we wanted to make any of our
+under-support software into app version they would be huge
+like the simple Xcceleratext program would be at least 350 or 400 mb
+like it's just a text editor so if we made more software at future
+without the new environment the sizes would be so unnecessarily large
+and pain to download,store and mange.
+
+so instead of all of that we made that the base environment of all apps
+(which is nearly the same with little differences but because of each app got its
+own environment that made them so large) turned into a one main environment
+that all apps depend on that would make our programs much smaller for example:
+
+**the previous version of XVX Browser was 950 MB**
+
+**but this version is only 230 MB !!**
+
+----------------
+
 -THE 1.7A1(first addon) UPDATE:
 
 we made both history and bookmarks instead of the new items
