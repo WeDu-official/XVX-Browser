@@ -9,7 +9,25 @@ that tracks people or anything like that.
 
 ----------------
 
--THE new W1.0(WeDu software base environment):
+<h3>-THE 1.8 UPDATE (AKA 'Kakudai') or W1.1 FEATURES:</h3>
+
+1-Extensions
+
+2-extreme improvements and fixes with the search engine choose storing and reading
+
+3-url bar search support search engine changing action
+
+4-incognito mode homepage got the same amount of features as normal homepage
+
+5-GUI changes
+
+6-GUI items not showing when the window is opened expect when moving or resizing BUG has been fixed
+
+7-new background(for default mode homepage)
+
+----------------
+
+* -THE new W1.0(WeDu software base environment):
 
 this update is very, very important for YOU
 as a user because if we wanted to make any of our
@@ -32,7 +50,7 @@ that all apps depend on that would make our programs much smaller for example:
 
 ----------------
 
--THE 1.7A1(first addon) UPDATE:
+* -THE 1.7A1(first addon) UPDATE:
 
 we made both history and bookmarks instead of the new items
 
@@ -42,7 +60,7 @@ that the new item are up(the same as other modern browsers
 
 ----------------
 
--THE 1.7 UPDATE (AKA 'gospel of balnoma'):
+* -THE 1.7 UPDATE (AKA 'gospel of balnoma'):
 
 it's the same as 1.6 update but all the removed features came back(expect the documentation(it might not come back for long time)
 
@@ -60,7 +78,7 @@ UPDATING THE WHOLE THING.
 
 ----------------
 
--THE 1.6 UPDATE (WEIRDO):
+* -THE 1.6 UPDATE (WEIRDO):
 
 WE DELETED BOTH 'Profiles','documentation' & 'Incognito mode(IM)'
 
@@ -71,14 +89,8 @@ and we fixed the blur in the website titles, and we added two other new features
 2-changing search engine
 
 -----------------
--THE 1.5-SF UPDATE (server fixes):
 
-finally we fixed the problem that made servers useless in XVX Browser after a very long time from the first 
-release, but now it requires from you to write not only the port but the host number or computer id for example:
-
-192.168.0.108
-
--THE 1.5-SF (server fixes):
+* -THE 1.5-SF (server fixes):
 
 finally we fixed the problem that made servers useless in XVX Browser after a very long time from the first 
 release but now it requires from you to write not only the port but the host number or computer id for example:
@@ -87,14 +99,14 @@ release but now it requires from you to write not only the port but the host num
 
 ----------------
 
--THE 1.5-F UPDATE (fully fixed):
+* -THE 1.5-F UPDATE (fully fixed):
 
 this is the same as the 1.5 BIG FIXES
 but with the new documentation
 
 ----------------
 
--THE 1.5 UPDATE BIG FIXES:
+* -THE 1.5 UPDATE BIG FIXES:
 
 
 WE MADE THIS UPDATE TO JUST SAVE OUR AND YOUR ASS
@@ -123,7 +135,7 @@ SO WE MADE THIS UPDATE TO FIX OF THESE PROBLEMS
 
 ------------------------------------------------------------------------
 
--THE NEW 1.5 (AKA 'the skinakola update') UPDATE FEATURES-
+* -THE NEW 1.5 (AKA 'the skinakola update') UPDATE FEATURES-
 
 NOTE:THIS IS UPDATE IS THE BIGGEST UPDATE EVER AT THE TIME THAT IT CAME IN (25/10/2024)
 so with this update (the 1.5 update)
@@ -152,7 +164,7 @@ we got:
 
 ----------------
 
--THE NEW 1.4-AA(ALL DONE 'addon') UPDATE FEATURES-
+* -THE NEW 1.4-AA(ALL DONE 'addon') UPDATE FEATURES-
 
 this update is like an addon for the previous update which adds new cache delete system that allow to you to either 
 clear the default cache folder or a PSCF(previously specified cache folder) chosen by you and we add the new "burn" 
@@ -160,7 +172,7 @@ feature that would do the same as clear(Both normal and PSCF cases) plus clearin
 
 ----------------
 
--THE NEW 1.4-A(ALL DONE) UPDATE FEATURES-
+* -THE NEW 1.4-A(ALL DONE) UPDATE FEATURES-
 
 this update would be the last update for the 1.4 series and we in it fix a lot of bugs and this update would come 
 with the first ever documentation for XVX Browser we fixed all the bug and even theme problems and bug and we 
@@ -175,7 +187,7 @@ update for long period of time and it's been created for long time support and h
 
 ----------------
 
--THE NEW 1.4-U(Ultra) UPDATE FEATURES-
+* -THE NEW 1.4-U(Ultra) UPDATE FEATURES-
 
 we added to the browser some features which allow to you to make a local host server and it can handle two users in the server to talk between each other with very strong system which doesn't allow to anyone after the two 
 first users connection so any one after them can't join and even if they went out of the server they can't come
@@ -183,14 +195,14 @@ back they should open a new server and that is max level protection.
 
 ----------------
 
--THE NEW 1.4-N(new installation system) UPDATE FEATURES-
+* -THE NEW 1.4-N(new installation system) UPDATE FEATURES-
 
 nearly the browser is the same but the app version of it the installer became much easier and better without like
 two installer without even counting the one that you install it from our website or here but now it became much better.
 
 ----------------
 
--THE NEW 1.4 UPDATE FEATURES-
+* -THE NEW 1.4 UPDATE FEATURES-
 
 1-you can change buttons,text,background(buttons-holding-tab)
 
@@ -213,7 +225,7 @@ page or anything like that
 
 ----------------
 
--THE NEW 1.3 UPDATE FEATURES-
+* -THE NEW 1.3 UPDATE FEATURES-
 
 1-fixing bug and the title bar problem
 
@@ -221,7 +233,7 @@ page or anything like that
 
 ----------------
 
--THE NEW 1.2 UPDATE FEATURES-
+* -THE NEW 1.2 UPDATE FEATURES-
 
 1-bookmarks
 
@@ -236,7 +248,7 @@ in the new bookmarks page
 
 ----------------
 
--THE NEW 1.1 UPDATE FEATURES-
+* -THE NEW 1.1 UPDATE FEATURES-
 
 1-under the url bar there is the website title bar
 
@@ -250,7 +262,7 @@ an url command like calculator:/
 
 ----------------
 
--THE 1.0 RELEASE CONTAINS-
+* -THE 1.0 RELEASE CONTAINS-
 
 1-history and deleting history
 

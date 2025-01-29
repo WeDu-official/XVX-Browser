@@ -2,4 +2,6 @@ APP REQUIREMENTS(VERY IMPORTANT):
 
 windows 11(it hasn't been tested on windows 10 but there is a high chance that it would work)
 
+only the 64 bit version of windows 11 is tested the 32 version might or not might work
+
 NOTE: has been tested on windows 11 and created in windows 11

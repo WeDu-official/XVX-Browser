@@ -49,7 +49,7 @@
         .search-bar input {
             flex-grow: 1;
             border: none;
-            outline: none
+            outline: none;
             padding: 5px;
             font-size: 18px;
             font-family: 'Arial', sans-serif;
@@ -129,9 +129,49 @@
             event.preventDefault(); // Prevent default form submission behavior
             const searchQuery = searchBar.value.trim();
             if (searchQuery) {
-                // Perform DuckDuckGo search using the searchQuery
-                const searchUrl = `https://duckduckgo.com/?q=${encodeURIComponent(searchQuery)}&ia=web`;
-                window.location.href = searchUrl;
+                // Read search engine preference from set.txt
+                let searchEngine = 1;
+                fetch('set2.txt')
+                    .then(response => {
+                        if (response.ok) {
+                            console.log(response.text())
+                            return response.text();
+                        } else {
+                            throw new Error('Failed to read search engine preference from set.txt');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error reading search engine preference:', error);
+                    })
+                    .finally(() => {
+                        let engineUrl;
+                        switch (searchEngine) {
+                            case 1:
+                                engineUrl = `https://duckduckgo.com/?q=${encodeURIComponent(searchQuery)}`;
+                                break;
+                            case 2:
+                                engineUrl = `https://www.google.com/search?q=${encodeURIComponent(searchQuery)}`;
+                                break;
+                            case 3:
+                                engineUrl = `https://www.bing.com/search?q=${encodeURIComponent(searchQuery)}`;
+                                break;
+                            case 4:
+                                engineUrl = `https://search.yahoo.com/search?q=${encodeURIComponent(searchQuery)}`;
+                                break;
+                            case 5:
+                                engineUrl = `https://www.ecosia.org/search?q=${encodeURIComponent(searchQuery)}`;
+                                break;
+                            case 6:
+                                engineUrl = `https://web.archive.org/`;
+                                break;
+                            default:
+                                console.warn('Invalid search engine preference in set.txt. Using DuckDuckGo.');
+                                engineUrl = `https://duckduckgo.com/?q=${encodeURIComponent(searchQuery)}&ia=web`;
+                                break;
+                        }
+
+                        window.location.href = engineUrl;
+                    });
             }
         });
 

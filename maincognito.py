@@ -10,7 +10,9 @@ import tkinter as tk
 from tkinter.font import Font
 from tkinter.filedialog import askopenfilename
 from tkinter import messagebox
-searchengine = 1
+searchengined = open('searchenginenum2.txt','r')
+searchengine = int(searchengined.read())
+searchengined.close()
 hardcoded = """<!DOCTYPE html>
 <html>
 <head>
@@ -657,7 +659,7 @@ class WebPage(wx.Panel):
         self.buttosn.SetForegroundColour(LIGHT_SCHEME['text'])
         self.buttosn.Bind(wx.EVT_ENTER_WINDOW, self.hovered_op1)
         self.buttosn.Bind(wx.EVT_LEAVE_WINDOW, self.leave_op1)
-        self.buttosn.SetToolTip(wx.ToolTip('show menu'))
+        self.buttosn.SetToolTip(wx.ToolTip('Show menu'))
         self.buttosn2 = wx.Button(self,label="⚙",size=(30, 30), style=wx.DOUBLE_BORDER)
         self.buttosn2.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
         self.buttosn2.SetForegroundColour(LIGHT_SCHEME['text'])
@@ -742,23 +744,55 @@ class WebPage(wx.Panel):
         url_field.SetValue(url)
         settings_menu = wx.Menu()
         self.sm_menu = wx.Menu()
-        self.menu_sm1 = menu_sm1 = wx.MenuItem(self.sm_menu, 0, "make a server")
-        self.menu_sm2 = menu_sm2 = wx.MenuItem(self.sm_menu, 1, "join a server")
-        self.menu_sm3 = menu_sm3 = wx.MenuItem(self.sm_menu, 2, "choose profile")
-        self.menu_sm4 = menu_sm4 = wx.MenuItem(self.sm_menu, 3, "update")
-        self.menu_sm5 = menu_sm5 = wx.MenuItem(self.sm_menu, 4, "change background")
-        self.menu_sm6 = menu_sm6 = wx.MenuItem(self.sm_menu, 5, "change search engine")
-        self.sm_menu.Append(self.menu_sm1)
-        self.sm_menu.Append(self.menu_sm2)
-        self.sm_menu.AppendSeparator()
-        self.sm_menu.Append(self.menu_sm3)
-        self.sm_menu.AppendSeparator()
-        self.sm_menu.Append(self.menu_sm5)
-        self.sm_menu.Append(self.menu_sm6)
-        self.sm_menu.AppendSeparator()
-        self.sm_menu.Append(self.menu_sm4)
+        self.extension_names = []
+        menu_sm = []
+        def strex(event):
+            m1 = self.sm_menu.FindItemById(event.GetId())
+            page = WebPage(self.parent,url=f"file:///{os. path. dirname(os. path. abspath(__file__)).replace('\\\\','/')}/extensions/{m1.GetItemLabelText()}.html")
+            page.SetBackgroundColour(LIGHT_SCHEME['background'])
+            self.parent.AddPage(page, caption="Loading", select=True)
+        def list_extensions():
+            def listing():
+                for file_name in os.listdir('extensions'):
+                    if file_name.endswith(".html"):
+                        self.extension_names.append(file_name[:-5])
+                for i in range(len(self.extension_names)):
+                    menu_sm.append(wx.MenuItem(self.sm_menu, i, self.extension_names[i]))
+                for i2 in range(len(self.extension_names)):
+                    self.sm_menu.Append(menu_sm[i2])
+                    self.sm_menu.Bind(wx.EVT_MENU, strex, menu_sm[i2])
+            listing()
+            def refex(event):
+                print('s')
+                self.extension_names.clear()
+                menu_sm.clear()
+                for loc1 in range(self.sm_menu.GetMenuItemCount()):
+                    self.sm_menu.Delete(loc1)
+                listing()
+                refi = wx.MenuItem(self.sm_menu, self.sm_menu.GetMenuItemCount(), 'refresh')
+                self.sm_menu.Append(refi)
+                self.sm_menu.Bind(wx.EVT_MENU, refex, refi)
+            refi = wx.MenuItem(self.sm_menu, self.sm_menu.GetMenuItemCount(), 'refresh')
+            self.sm_menu.Append(refi)
+            self.sm_menu.Bind(wx.EVT_MENU, refex, refi)
+        list_extensions()
         self.optional_menu = wx.Menu()
-        self.menu_lm = menu_lm = wx.MenuItem(self.optional_menu, 0, "Literal mode: " + lm)
+        self.menu_sm1 = menu_sm1 = wx.MenuItem(self.optional_menu, 0, "make a server")
+        self.menu_sm2 = menu_sm2 = wx.MenuItem(self.optional_menu, 1, "join a server")
+        self.menu_sm3 = menu_sm3 = wx.MenuItem(self.optional_menu, 2, "choose profile")
+        self.menu_sm4 = menu_sm4 = wx.MenuItem(self.optional_menu, 3, "update")
+        self.menu_sm5 = menu_sm5 = wx.MenuItem(self.optional_menu, 4, "change background")
+        self.menu_sm6 = menu_sm6 = wx.MenuItem(self.optional_menu, 5, "change search engine")
+        self.menu_lm = menu_lm = wx.MenuItem(self.optional_menu, 6, "Literal mode: " + lm)
+        self.optional_menu.Append(self.menu_sm1)
+        self.optional_menu.Append(self.menu_sm2)
+        self.optional_menu.AppendSeparator()
+        self.optional_menu.Append(self.menu_sm3)
+        self.optional_menu.AppendSeparator()
+        self.optional_menu.Append(self.menu_sm5)
+        self.optional_menu.Append(self.menu_sm6)
+        self.optional_menu.AppendSeparator()
+        self.optional_menu.Append(self.menu_sm4)
         self.optional_menu.AppendSeparator()
         self.optional_menu.Append(self.menu_lm)
         self.page_menu = wx.Menu()
@@ -803,12 +837,12 @@ class WebPage(wx.Panel):
         self.page_menu.Append(menu_imbt)
         self.page_menu.AppendSeparator()
         self.page_menu.AppendSubMenu(settings_menu, 'Page Settings')
-        self.sm_menu.Bind(wx.EVT_MENU, self.mas, menu_sm1)
-        self.sm_menu.Bind(wx.EVT_MENU, self.cts, menu_sm2)
-        self.sm_menu.Bind(wx.EVT_MENU, self.ucp, menu_sm3)
-        self.sm_menu.Bind(wx.EVT_MENU, self.upd, menu_sm4)
-        self.sm_menu.Bind(wx.EVT_MENU, self.changebackground, menu_sm5)
-        self.sm_menu.Bind(wx.EVT_MENU, self.changesearchengine, menu_sm6)
+        self.optional_menu.Bind(wx.EVT_MENU, self.mas, menu_sm1)
+        self.optional_menu.Bind(wx.EVT_MENU, self.cts, menu_sm2)
+        self.optional_menu.Bind(wx.EVT_MENU, self.ucp, menu_sm3)
+        self.optional_menu.Bind(wx.EVT_MENU, self.upd, menu_sm4)
+        self.optional_menu.Bind(wx.EVT_MENU, self.changebackground, menu_sm5)
+        self.optional_menu.Bind(wx.EVT_MENU, self.changesearchengine, menu_sm6)
         self.optional_menu.Bind(wx.EVT_MENU, self.clms, menu_lm)
         settings_menu.Bind(wx.EVT_MENU, self.enable_contextmenu, menu_contextmenu)
         settings_menu.Bind(wx.EVT_MENU, self.enable_historyenabled, menu_historyenabled)
@@ -844,7 +878,9 @@ class WebPage(wx.Panel):
         def sett():
             global searchengine
             searchengine = radiobutton_variable.get()
-
+            searchengineset = open('searchenginenum2.txt', 'w')
+            searchengineset.write(str(searchengine))
+            searchengineset.close()
             def replace_line(file_name, line_num, text):
                 lines = open(file_name, 'r').readlines()
                 lines[line_num] = text
@@ -1215,8 +1251,8 @@ if errorlevel 1 (
         title = self.html_window.GetCurrentTitle()
         current_page_index = self.parent.GetPageIndex(self)
         if len(title) > 14:
-            self.parent.SetPageText(current_page_index, title[:10] + '...')
             self.fulltitle.SetValue(title)
+            self.parent.SetPageText(current_page_index, title[:10] + '...')
         else:
             self.fulltitle.SetValue(title)
             self.parent.SetPageText(current_page_index, title)
@@ -1263,7 +1299,6 @@ class Browser(wx.Frame):
         if os.path.exists('./logo.ico'):
             icone = wx.Icon('./logo.ico', wx.BITMAP_TYPE_ANY)
             self.SetIcon(icone)
-            self.Show()
         else:
             pass
         self.SetMinSize((500, 450))

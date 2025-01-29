@@ -4,6 +4,22 @@ it's a very basic and minimal Browser that its creators don't track you
 because we don't track anyone, the source code is open, and we didn't hide anything
 that tracks people or anything like that.
 
+-THE 1.8 UPDATE (AKA 'Kakudai') or W1.1 FEATURES:
+
+1-Extensions
+
+2-extreme improvements and fixes with the search engine choose storing and reading
+
+3-url bar search support search engine changing action
+
+4-incognito mode homepage got the same amount of features as normal homepage
+
+5-GUI changes
+
+6-GUI items not showing when the window is opened expect when moving or resizing BUG has been fixed
+
+7-new background(for default mode homepage)
+
 -THE new W1.0(WeDu software base environment):
 
 this update is very, very important for YOU
