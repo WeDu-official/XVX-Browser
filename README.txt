@@ -4,6 +4,19 @@ it's a very basic and minimal Browser that its creators don't track you
 because we don't track anyone, the source code is open, and we didn't hide anything
 that tracks people or anything like that.
 
+-THE 1.8G2 UPDATE (AKA 'Kakudai flowers2') (NONE):
+
+updating hard coded homepages in the system with the new changes
+and fixing the 'Forgotten <' problem in normal homepage
+
+
+-THE 1.8G UPDATE (AKA 'Kakudai flowers') (NONE):
+
+note: from this update, only the updates that need changes of WBSE compared
+to the version before it  would be added as a new version in the W series, and only the update that need changes for their AMM compared to the version before it would be added as a new version in the A series.
+
+this update is an improvement to the interface , firstly we minimized the required width and height that it become even less than Microsoft edge's minimum width and height, secondly we improved the homepage and incognito a lot like a lot we made them have different cases and made them working much better with smaller dimensions esp. width , finally we done some other GUI changes like removing the spaces between the 'new tab' button and 'extensions' button and even removed the space between the 'refresh' button and URL and name bars plus we minimized the minimum bars width from 100 pixels to 20 pixels.
+
 -THE 1.8b UPDATE (AKA 'Kakudai origin') (W1.1b/A1.0f):
 
 this update is to get rid of the temporary way for the AAM to work using a weird and modified version of the normal W1.1 and instead now it depends on the actual  W1.1b update which would be the base method and not temporary.
@@ -47,7 +60,9 @@ that all apps depend on that would make our programs much smaller for example:
 
 **the previous version of XVX Browser was 950 MB**
 
-**but this version is only 230 MB !!**
+**but this version is only 210 MB !!**
+
+**and the installer is only 30MB !!**
 
 -THE 1.7A1(first addon) UPDATE:
 

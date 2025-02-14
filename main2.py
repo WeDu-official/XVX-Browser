@@ -17,102 +17,231 @@ hardcoded = """<!DOCTYPE html>
 <html>
 <head>
     <title>XVX Browser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url"""
+body {
+    font-family: Arial, sans-serif;
+    background-image: url"""
 hardcoded2 = """ /* Replace with your desired image */
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            margin: 0;
-            display: flex; /* Center the entire container */
-            justify-content: center;
-            align-items: center;
-        }
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
 
-        .browser-container {
-            max-width: 800px; /* Adjust width as needed */
-            padding: 20px;
-            width: 80%; /* Make it 80% of the viewport width */
-        }
+.browser-container {
+    max-width: 800px;
+    padding: 20px;
+    width: 95%;
+    box-sizing: border-box;
+}
 
-        .header {
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-direction: column; /* Stack elements vertically */
-        }
+.header {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
-        .browser-title {
-            font-size: 40px;
-            font-weight: bold;
-            color: #443;
-            margin-bottom: auto; /* Push title to the top */
-        }
+.browser-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #443;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    text-align: center;
+}
 
-        .search-bar {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            width: 100%; /* Make it 100% of the container width */
-            display: flex;
-            align-items: center;
-        }
+.search-bar {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 8px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, all 0.3s ease; /* Added transition for all */
+}
 
-        .search-bar input {
-            flex-grow: 1;
-            border: none;
-            outline: none;
-            padding: 5px;
-            font-size: 18px;
-            font-family: 'Arial', sans-serif;
-            placeholder: "Enter URL or search query"; /* Keep the placeholder */
-        }
+.search-bar:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
 
-        .search-button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 10px; /* Increased border radius */
-            padding: 12px 20px; /* Adjusted padding */
-            cursor: pointer;
-            font-weight: bold; /* Made text bolder */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            background-image: linear-gradient(to bottom, #008cff 0%, #007bff 100%);
-            opacity: 0.5; /* Make the button appear disabled when empty */
-            pointer-events: none; /* Prevent clicking when disabled */
-        }
+.search-bar input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 1.4em;
+    font-family: 'Arial', sans-serif;
+    placeholder: "Enter URL or search query";
+    min-width: 0;
+    word-wrap: break-word;
+    hyphens: auto;
+    box-sizing: border-box;
+    background-color: transparent;
+}
 
-        .search-button:hover {
-            background-color: #0062cc;
-            transform: scale(1.05); /* Added slight hover animation */
-        }
+.search-bar input:focus {
+    outline: 2px solid #007bff;
+}
 
-        .search-button:active {
-            background-color: #00509d;
-            transform: scale(0.95); /* Added active state animation */
-        }
+.search-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    background-image: linear-gradient(to bottom, #008cff 0%, #007bff 100%);
+    opacity: 0.5;
+    pointer-events: none;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    margin-left: 8px;
+    margin-top: 0;
+}
 
-        .search-button.enabled {
-            opacity: 1; /* Make the button appear enabled when there's input */
-            pointer-events: auto; /* Allow clicking when enabled */
-        }
+.search-button:hover {
+    background-color: #0069d9;
+    transform: scale(1.02);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
 
-        .content-area {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 20px;
-        }
+.search-button:active {
+    background-color: #0056b3;
+    transform: scale(0.98);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-        @media screen and (max-width: 600px) {
-            .browser-title {
-                font-size: 35px;
-            }
-        }
-    </style>
+.search-button.enabled {
+    opacity: 1;
+    pointer-events: auto;
+}
+/* Media Queries Only */
+
+@media (max-width: 768px) {
+  .browser-title {
+    font-size: 1.7em;
+  }
+  .search-bar input {
+    font-size: 1.3em;
+  }
+  .search-button {
+    font-size: 0.9em;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .browser-title {
+    font-size: 1.5em;
+  }
+  .search-bar input {
+    font-size: 1.2em;
+  }
+  .search-button {
+    font-size: 0.8em;
+    padding: 6px 12px;
+  }
+}
+@media (max-height: 200px) {
+  .browser-title {
+    display: none;
+  }
+
+  .browser-container {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .search-bar {
+    width: 95%;
+    max-width: 400px;
+    margin: 20px auto;
+  }
+}
+
+@media (max-width: 400px) {
+  .browser-title {
+    font-size: 1.3em;
+  }
+  .search-bar {
+    padding: 6px;
+    align-items: flex-start;
+  }
+  .search-bar input {
+    font-size: 1em;
+    padding: 6px;
+  }
+  .search-button {
+    font-size: 0.7em;
+    padding: 5px 10px;
+    margin-top: 4px;
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 200px) { /* Combined for width OR height */
+    .search-bar {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 95%;
+        max-width: 350px;
+        height: auto;  /* Height adjusts */
+        max-height: 300px; /* New: Maximum height */
+        background-color: rgba(255, 255, 255, 0.95);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px; /* Reduced padding */
+        z-index: 1000;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-size: 0.7em; /* More scaling */
+        transition: width 0.3s ease, max-width 0.3s ease, max-height 0.3s ease; /* Transition for height */
+    }
+
+    .search-bar input {
+        width: 100%;
+        font-size: 0.9em; /* Scaled down */
+        padding: 8px; /* Reduced padding */
+        border-radius: 5px;
+        box-sizing: border-box;
+        min-height: 50px; /* Reduced min-height */
+    }
+
+    .search-button {
+        width: 100%;
+        font-size: 0.8em; /* Scaled down */
+        padding: 8px; /* Reduced padding */
+        margin-top: 8px; /* Reduced margin */
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .browser-title {
+        display: none;
+    }
+}
+</style>
 </head>
 <body>
     <div class="browser-container">
@@ -146,7 +275,7 @@ hardcoded2 = """ /* Replace with your desired image */
 
             if (searchQuery) {
                 // Read search engine preference from set.txt
-                let searchEngine = 2;
+                let searchEngine = 1;
                 fetch('set.txt')
                     .then(response => {
                         if (response.ok) {
@@ -681,7 +810,7 @@ class WebPage(wx.Panel):
         reload.SetToolTip(reload_tip)
         self.url_field = url_field = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
         self.url_field.SetCursor(wx.Cursor(wx.CURSOR_IBEAM))
-        geoaka = (100, 15)
+        geoaka = (20, 15)
         self.url_field.SetMinSize(geoaka)
         self.fulltitle = fulltitle = wx.TextCtrl(self, value="", style=wx.TE_READONLY)
         self.fulltitle.SetCursor(wx.Cursor(wx.CURSOR_IBEAM))
@@ -699,33 +828,34 @@ class WebPage(wx.Panel):
         self.buttosn.Bind(wx.EVT_ENTER_WINDOW, self.hovered_op1)
         self.buttosn.Bind(wx.EVT_LEAVE_WINDOW, self.leave_op1)
         self.buttosn.SetToolTip(wx.ToolTip('Show menu'))
-        self.buttosn2 = wx.Button(self,label="⚙",size=(30, 30), style=wx.DOUBLE_BORDER)
+        self.buttosn2 = wx.Button(self, label="⚙", size=(30, 30), style=wx.DOUBLE_BORDER)
         self.buttosn2.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
         self.buttosn2.SetForegroundColour(LIGHT_SCHEME['text'])
-        self.buttosn2.SetFont(wx.Font(15, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, 'Consolas'))
+        self.buttosn2.SetFont(
+            wx.Font(15, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, 'Consolas'))
         self.buttosn2.Bind(wx.EVT_ENTER_WINDOW, self.hovered_op2)
         self.buttosn2.SetToolTip(wx.ToolTip('General Settings'))
         self.SM = wx.Button(self, label="❃", size=(30, 30), style=wx.DOUBLE_BORDER)
         self.SM.SetBackgroundColour(LIGHT_SCHEME['button_normal'])
         self.SM.SetForegroundColour(LIGHT_SCHEME['text'])
-        self.SM.SetFont(wx.Font(19, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, 'Consolas'))
+        self.SM.SetFont(
+            wx.Font(19, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, 'Consolas'))
         self.SM.Bind(wx.EVT_ENTER_WINDOW, self.hovered_sm)
         self.SM.Bind(wx.EVT_LEAVE_WINDOW, self.leave_sm)
         self.SM.SetToolTip(wx.ToolTip('Show extensions'))
         stacked_sizer = wx.BoxSizer(wx.VERTICAL)
-        stacked_sizer.Add(self.url_field,1, wx.EXPAND,5)
-        stacked_sizer.Add(self.fulltitle,1, wx.EXPAND,5)
-        self.html_window = html_window = wx.html2.WebView.New(self,backend=wx.html2.WebViewBackendEdge)
+        stacked_sizer.Add(self.url_field, 1, wx.EXPAND, 5)
+        stacked_sizer.Add(self.fulltitle, 1, wx.EXPAND, 5)
+        self.html_window = html_window = wx.html2.WebView.New(self, backend=wx.html2.WebViewBackendEdge)
         top_bar_container.AddGrowableCol(4)
-        top_bar_container.Add(back, 0, wx.LEFT | wx.BOTTOM | wx.TOP, 5)
+        top_bar_container.xAdd(back, 0, wx.LEFT | wx.BOTTOM | wx.TOP, 5)
         top_bar_container.Add(forward, 0, wx.LEFT | wx.BOTTOM | wx.TOP, 5)
         top_bar_container.Add(reload, 0, wx.LEFT | wx.BOTTOM | wx.TOP, 5)
-        top_bar_container.AddSpacer(30)
+        top_bar_container.AddSpacer(5)
         self.top_bar_container.Add(stacked_sizer, 0, wx.EXPAND)
         top_bar_container.Add(self.buttosn, 0, wx.RIGHT | wx.BOTTOM | wx.TOP, 5)
         top_bar_container.Add(self.buttosn2, 0, wx.RIGHT | wx.BOTTOM | wx.TOP, 5)
         top_bar_container.Add(self.SM, 0, wx.RIGHT | wx.BOTTOM | wx.TOP, 5)
-        top_bar_container.AddSpacer(30)
         top_bar_container.Add(self.new, 0, wx.ALIGN_RIGHT | wx.BOTTOM | wx.RIGHT | wx.TOP, 5)
         self.find_container = find_container = wx.BoxSizer(wx.HORIZONTAL)
         self.find_field = find_field = wx.TextCtrl(self, style=wx.TE_PROCESS_ENTER)
@@ -936,6 +1066,7 @@ class WebPage(wx.Panel):
         tk.Radiobutton(root, text="bing", variable=radiobutton_variable, value=3).pack()
         tk.Radiobutton(root, text="yahoo", variable=radiobutton_variable, value=4).pack()
         tk.Radiobutton(root, text="ecosia", variable=radiobutton_variable, value=5).pack()
+
         def sett():
             global searchengine
             searchengine = radiobutton_variable.get()
@@ -948,7 +1079,7 @@ class WebPage(wx.Panel):
                 out = open(file_name, 'w')
                 out.writelines(lines)
                 out.close()
-            replace_line('home.html',132,f'                let searchEngine = {searchengine};\n')
+            replace_line('home.html',261,f'                let searchEngine = {searchengine};\n')
         tk.Button(root, text='set',width=9,height=2,bg='lightblue',command=sett).pack()
         root.mainloop()
     def changebackground(self, event):
@@ -1436,7 +1567,7 @@ class Browser(wx.Frame):
             self.SetIcon(icone)
         else:
             pass
-        self.SetMinSize((500, 450))
+        self.SetMinSize((360, 110))
         self.hovered_page = None
         self.hover_timer = wx.Timer(self)
         self.Bind(wx.EVT_TIMER, self.on_hover_timer)
